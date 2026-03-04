@@ -1,70 +1,70 @@
 ---
-name: start-project
-description: Bootstrap a new project repo. Use this skill whenever the user wants to initialize a new project from scratch. Reads context.md and PLAN.md to gather what's known about the project, asks the user to supply anything missing, then creates the GitHub repo, establishes directory structure, copies workflow skills, writes CLAUDE.md and README, sets up GitHub Projects and milestone, and hands off to the define-goals skill to establish the initial product scope. Always invoke this before any other skill when starting a new project.
+name: setup-project
+description: Bootstrap a new project repo from scratch. Use this skill whenever the user wants to start a new project and has no existing planning files. Asks the user for all project context directly, then creates the GitHub repo, establishes directory structure, writes CLAUDE.md and README, sets up GitHub Projects and milestone, and hands off to the define-goals skill. Always invoke this before any other skill when starting a new project.
 ---
 
-# Start Project
+# Setup Project
 
-Bootstrap a new project from zero: repo, structure, workflow skills, GitHub setup, and
-project scoping handoff.
+Bootstrap a new project from zero: repo, structure, workflow setup, GitHub configuration, and
+product scoping handoff.
 
 This skill is the entry point to the entire development workflow. Done right, it produces
 a repo that looks like a real product from day one — not a half-baked scaffold.
 
 ---
 
-## Before you begin
-
-Read `context.md` and `PLAN.md` from this planning repo. These give you the full picture:
-who is building, why, what each project is about, and what the workflow looks like. The
-quality of the README, CLAUDE.md, and everything else depends on understanding this context.
-
----
-
 ## Step 1 — Gather project context
 
-Ask the user which project to start. Then look it up in `PLAN.md` and `context.md`.
+Detect the user's GitHub handle:
 
-If enough information is already there (problem it solves, goal, skills showcased), use
-it — no need to ask again. If the project isn't described or details are thin, ask the
-user to provide:
+```bash
+gh auth status
+```
 
-- **Name** — becomes the repo name (lowercase, kebab-case)
+Extract the authenticated username from the output. Confirm it with the user — if they want
+to use a different handle or organisation, let them correct it now.
+
+Then ask the user to provide the following. Ask all at once, not one by one:
+
+- **Project name** — becomes the repo name (lowercase, kebab-case)
+- **Description** — one sentence: what it is and for whom (becomes repo description + README tagline)
 - **Problem** — what situation or pain does this address?
 - **Goal** — what does a successful v1 look like?
-- **Skills showcased** — what technical or craft strengths does this demonstrate?
-- **Any constraints** — stack preferences, time, integrations, etc.
+- **Skills showcased** — what technical or craft strengths does this demonstrate? (optional)
 
 Confirm all details with the user before proceeding. The information gathered here drives
-the README and CLAUDE.md.
+the README, CLAUDE.md, and the GitHub repo description.
 
 ---
 
 ## Step 2 — Create the GitHub repo and clone it
 
 ```bash
-gh repo create driera/<name> \
+gh repo create <handle>/<name> \
   --public \
-  --description "<one-line goal statement>" \
+  --description "<description from step 1>" \
   --clone
 
 cd <name>
 ```
 
-The description is the project's Goal in one sentence — terse and product-focused.
+The description is the one-sentence value proposition gathered in step 1.
 
 ---
 
 ## Step 3 — Create directory structure
 
-Run the bundled script:
 ```bash
-bash .claude/skills/start-project/scripts/create-dirs.sh
+mkdir -p docs/ADRs
+mkdir -p .github/ISSUE_TEMPLATE
+mkdir -p .github/workflows
+mkdir -p sessions
 ```
 
 This creates:
-- `docs/ADRs/` — ADRs, created by `write-adr` during design
+- `docs/ADRs/` — ADRs, written by `write-adr` during design
 - `.github/ISSUE_TEMPLATE/` — issue template for user stories
+- `.github/workflows/` — CI configuration
 - `sessions/` — per-issue work artifacts (exploration.md, design.md, plan.md)
 
 **Checkpoint:** confirm directory structure created before continuing.
@@ -77,9 +77,6 @@ The README is a product brief, not an install guide. It should communicate what 
 project IS and WHY it matters before saying anything about how to use it. Engineers at
 strong engineering orgs scan repos to understand what someone cares about and how they
 think — this is that first impression.
-
-Each repo stands alone — no links to other repos in this portfolio, no links to the
-portfolio site. Cross-repo linking is `me`'s responsibility.
 
 Structure:
 
@@ -96,12 +93,13 @@ Use the Problem and Goal gathered in step 1.>
 ## What's built here
 
 <Bulleted list of the technical and craft skills showcased. Write these as capabilities,
-not technologies — e.g., "Composable ARIA patterns" rather than "React + TypeScript".>
+not technologies — e.g., "Composable ARIA patterns" rather than "React + TypeScript".
+If the user provided skills showcased in step 1, use those. Otherwise, derive from context.>
 
 ## Status
 
 Current milestone: `MVP — in progress`
-[Goals →](GOALS.md) · [Roadmap →](<GitHub Projects link — add after step 8>)
+[Goals →](GOALS.md) · [Roadmap →](<GitHub Projects link — add after step 9>)
 
 ## Development
 
@@ -242,9 +240,50 @@ Constraints, approach hints, ADR references.
 
 ## Step 8 — CI/CD baseline
 
-Scaffold a baseline CI workflow using the bundled script:
-```bash
-cp .claude/skills/start-project/scripts/scaffold-ci.yml .github/workflows/ci.yml
+Write the baseline CI workflow file at `.github/workflows/ci.yml`:
+
+```yaml
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  ci:
+    name: Lint, Type-check, Test, Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+        if: ${{ success() }}
+
+      - name: Type-check
+        run: npm run typecheck
+        if: ${{ success() }}
+        continue-on-error: true  # remove if project has strict typecheck script
+
+      - name: Test
+        run: npm test -- --run
+        if: ${{ success() }}
+
+      - name: Build
+        run: npm run build
+        if: ${{ success() }}
 ```
 
 This adds lint + test + build on every PR — deterministic, no model variance.
@@ -261,7 +300,7 @@ Create the MVP milestone. The description comes from GOALS.md after `define-goal
 leave a placeholder for now, update after step 10:
 
 ```bash
-gh api repos/driera/<name>/milestones \
+gh api repos/<handle>/<name>/milestones \
   --method POST \
   -f title="MVP" \
   -f description="<demo-ready threshold — fill after define-goals>"
@@ -273,7 +312,7 @@ on this milestone being closed.
 Create a GitHub Projects roadmap board:
 
 ```bash
-gh project create --owner driera --title "<Project Name> Roadmap"
+gh project create --owner <handle> --title "<Project Name> Roadmap"
 ```
 
 Note the project URL from the output. Update the `[GitHub Projects]` placeholder in
@@ -303,7 +342,7 @@ Wait for the user to confirm the push is complete before continuing.
 
 Tell the user:
 
-> "Repo is live at github.com/driera/<name>. Next step: define the product goals — what
+> "Repo is live at github.com/<handle>/<name>. Next step: define the product goals — what
 > this project needs to achieve, for whom, and in what order of priority. Open the new
 > project repo and run `/define-goals` to start."
 

@@ -74,10 +74,10 @@
       "keywords": ["planning", "issues", "user-stories", "github"]
     },
     {
-      "name": "start-project",
-      "description": "Bootstrap a new project repo. Use this skill whenever the user wants to initialize a new project from scratch. Reads context.md and PLAN.md to gather what's known about the project, asks the user to supply anything missing, then creates the GitHub repo, establishes directory structure, copies workflow skills, writes CLAUDE.md and README, sets up GitHub Projects and milestone, and hands off to the define-goals skill to establish the initial product scope. Always invoke this before any other skill when starting a new project.",
-      "source": "./dist/plugins/start-project",
-      "skills": ["./skills/start-project"],
+      "name": "setup-project",
+      "description": "Bootstrap a new project repo from scratch. Use this skill whenever the user wants to start a new project and has no existing planning files. Asks the user for all project context directly, then creates the GitHub repo, establishes directory structure, writes CLAUDE.md and README, sets up GitHub Projects and milestone, and hands off to the define-goals skill. Always invoke this before any other skill when starting a new project.",
+      "source": "./dist/plugins/setup-project",
+      "skills": ["./skills/setup-project"],
       "category": "planning",
       "keywords": ["planning", "bootstrap", "setup", "inception"]
     },

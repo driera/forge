@@ -11,6 +11,19 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [1.1.0] — 2026-03-05
+
+### Added
+- `setup-project`: self-contained bootstrap skill. Gathers all project context directly
+  from the user (GitHub handle, project name, description, problem, v1 goal, skills showcased)
+  with no dependency on external planning files. Works for any Forge adopter.
+
+### Removed
+- `start-project`: portfolio-specific bootstrap that read `context.md` and `PLAN.md` and
+  hardcoded `driera/` as the GitHub handle. Not suitable for a public skill library.
+
+---
+
 ## [1.0.1] — 2026-03-05
 
 ### Changed
