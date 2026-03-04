@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate-skills:
+    name: Validate skill structure
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check each skill has SKILL.md
+        run: |
+          failed=0
+          for skill_dir in skills/*/; do
+            skill_name=$(basename "$skill_dir")
+            if [ ! -f "$skill_dir/SKILL.md" ]; then
+              echo "❌ Missing SKILL.md in skills/$skill_name"
+              failed=1
+            else
+              echo "✅ skills/$skill_name"
+            fi
+          done
+          exit $failed
+
+      - name: Check each skill has README.md
+        run: |
+          failed=0
+          for skill_dir in skills/*/; do
+            skill_name=$(basename "$skill_dir")
+            if [ ! -f "$skill_dir/README.md" ]; then
+              echo "❌ Missing README.md in skills/$skill_name"
+              failed=1
+            else
+              echo "✅ skills/$skill_name README"
+            fi
+          done
+          exit $failed
+
+      - name: Check dist/ is in sync with skills/
+        run: |
+          failed=0
+          for skill_dir in skills/*/; do
+            skill_name=$(basename "$skill_dir")
+            dist_path="dist/plugins/$skill_name/skills/$skill_name/SKILL.md"
+            if [ ! -f "$dist_path" ]; then
+              echo "❌ dist/ out of sync for $skill_name — run scripts/build-dist.sh"
+              failed=1
+            else
+              echo "✅ dist/$skill_name"
+            fi
+          done
+          exit $failed

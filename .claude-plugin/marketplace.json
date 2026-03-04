@@ -1,0 +1,93 @@
+{
+  "name": "forge",
+  "owner": {
+    "name": "driera",
+    "url": "https://github.com/driera"
+  },
+  "metadata": {
+    "description": "Versioned Claude skills for structured agentic software development",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "commit",
+      "description": "Commits work done during the current session. Use this skill whenever the user wants to commit their changes — whether they say \"commit\", \"save my work\", \"let's commit\", \"commit what we did\", or similar. The skill inspects git status and diff, uses the session context to understand what was done, stages the right files, writes short one-line conventional commit messages (feat/fix/docs/chore/etc.), and splits into multiple commits if the changes are logically distinct (always confirming with the user first). Never pushes.",
+      "source": "./dist/plugins/commit",
+      "skills": ["./skills/commit"],
+      "category": "git",
+      "keywords": ["git", "commits", "conventional-commits"]
+    },
+    {
+      "name": "define-goals",
+      "description": "Creates or evolves GOALS.md — the product source of truth for a project. Use this skill when starting a new project (inception mode: no GOALS.md yet), or when the user wants to revisit, refine, or extend existing goals (evolution mode). Triggered by start-project at the end of bootstrapping, and by the user directly at any point during the project lifecycle. Always invoke this skill when the user says \"define goals\", \"update goals\", \"review our goals\", \"what are we building toward\", or similar.",
+      "source": "./dist/plugins/define-goals",
+      "skills": ["./skills/define-goals"],
+      "category": "planning",
+      "keywords": ["planning", "goals", "product", "inception"]
+    },
+    {
+      "name": "explore-issue",
+      "description": "Entry point to the delivery loop. Fetches a GitHub issue, explores its problem space, then drives the design through dialogue — covering architecture, components, data flow, error handling, and testing — before handing off to plan. Use this whenever the user says \"explore issue NNN\", \"work on NNN\", \"let's start issue NNN\", \"pick up issue NNN\", or similar. Also triggers when the user says \"explore issue\" or \"next issue\" with no number — in that case, fetch open issues and let the user choose.",
+      "source": "./dist/plugins/explore-issue",
+      "skills": ["./skills/explore-issue"],
+      "category": "planning",
+      "keywords": ["planning", "issues", "design", "exploration", "delivery-loop"]
+    },
+    {
+      "name": "plan",
+      "description": "Reads exploration.md and design.md from the current session and produces bite-size implementation plan in plan.md. Use this whenever the user says \"plan\", \"write the plan\", \"plan the implementation\", or after explore-issue hands off to planning.",
+      "source": "./dist/plugins/plan",
+      "skills": ["./skills/plan"],
+      "category": "planning",
+      "keywords": ["planning", "tasks", "implementation", "delivery-loop"]
+    },
+    {
+      "name": "implement",
+      "description": "Executes the implementation plan from plan.md task by task, following TDD. Reviews the plan critically before starting, then loops through tasks with a report-and-feedback cycle before each commit. Use this whenever the user says \"implement\", \"start implementing\", \"let's code\", or after plan hands off to implementation.",
+      "source": "./dist/plugins/implement",
+      "skills": ["./skills/implement"],
+      "category": "development",
+      "keywords": ["development", "tdd", "implementation", "delivery-loop"]
+    },
+    {
+      "name": "review",
+      "description": "Reviews the implementation of an issue before merge. Gathers context from the issue and design.md, delegates to the code-reviewer agent, then drives fixes inline or escalates to plan. Use this whenever the user says \"review\", \"review the implementation\", \"let's review\", \"ready for review\", \"before I merge\", or similar.",
+      "source": "./dist/plugins/review",
+      "skills": ["./skills/review"],
+      "category": "development",
+      "keywords": ["development", "review", "code-quality", "delivery-loop"]
+    },
+    {
+      "name": "write-adr",
+      "description": "Creates an Architecture Decision Record in docs/ADRs/. Floats across both workflow loops — proactively suggested by Claude when a significant architectural decision is detected, or triggered directly by the user at any point. Use this whenever the user says \"write an ADR\", \"document this decision\", \"capture this\", or when a decision with real tradeoffs has been made and isn't yet recorded.",
+      "source": "./dist/plugins/write-adr",
+      "skills": ["./skills/write-adr"],
+      "category": "documentation",
+      "keywords": ["documentation", "adr", "architecture", "decisions"]
+    },
+    {
+      "name": "write-issue",
+      "description": "Creates a GitHub issue in user-story format. Use this skill whenever the user wants to create an issue — whether they say \"write an issue\", \"create an issue\", \"let's add an issue for X\", \"open a ticket for\", or similar. The user provides the what and why; the skill asks clarifying questions if needed, drafts the full issue, lets the user refine it, then creates it on GitHub after confirmation. Always invoke this skill for issue creation requests.",
+      "source": "./dist/plugins/write-issue",
+      "skills": ["./skills/write-issue"],
+      "category": "planning",
+      "keywords": ["planning", "issues", "user-stories", "github"]
+    },
+    {
+      "name": "start-project",
+      "description": "Bootstrap a new project repo. Use this skill whenever the user wants to initialize a new project from scratch. Reads context.md and PLAN.md to gather what's known about the project, asks the user to supply anything missing, then creates the GitHub repo, establishes directory structure, copies workflow skills, writes CLAUDE.md and README, sets up GitHub Projects and milestone, and hands off to the define-goals skill to establish the initial product scope. Always invoke this before any other skill when starting a new project.",
+      "source": "./dist/plugins/start-project",
+      "skills": ["./skills/start-project"],
+      "category": "planning",
+      "keywords": ["planning", "bootstrap", "setup", "inception"]
+    },
+    {
+      "name": "skill-creator",
+      "description": "Create new skills, modify, improve, or review existing skills. Use when users want to create a skill from scratch, update or iterate on an existing skill, or review a skill for quality and alignment. Always invoke this skill when the user says \"make a skill for X\", \"create a skill\", \"update the skill\", \"review the skill\", or similar.",
+      "source": "./dist/plugins/skill-creator",
+      "skills": ["./skills/skill-creator"],
+      "category": "meta",
+      "keywords": ["meta", "skills", "workflow", "tooling"]
+    }
+  ]
+}
