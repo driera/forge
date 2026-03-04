@@ -65,7 +65,6 @@ bash .claude/skills/start-project/scripts/create-dirs.sh
 This creates:
 - `docs/ADRs/` — ADRs, created by `write-adr` during design
 - `.github/ISSUE_TEMPLATE/` — issue template for user stories
-- `.claude/skills/` — workflow skills (populated in step 5)
 - `sessions/` — per-issue work artifacts (exploration.md, design.md, plan.md)
 
 **Checkpoint:** confirm directory structure created before continuing.
@@ -111,33 +110,27 @@ Current milestone: `MVP — in progress`
 
 ---
 
-## Step 5 — Pull workflow skills from forge
+## Step 5 — Verify Forge is installed
 
-Pull skills from `github.com/driera/forge` at the current stable tag:
+Forge skills are distributed as a Claude plugin — no per-project file copying needed.
+Skills are available globally once the marketplace is added to Claude Code.
 
+If Forge isn't already installed, tell the user:
+
+> "Add the Forge marketplace to Claude Code:
+> ```
+> /plugin marketplace add driera/forge
+> ```
+> Let me know when it's done."
+
+Wait for confirmation before continuing.
+
+Note the current Forge version for CLAUDE.md (step 6):
 ```bash
-# Check the current forge tag
-gh release view --repo driera/forge --json tagName
-
-# Pull skills into project
-gh api repos/driera/forge/tarball/<tag> | tar xz --strip=1 skills/ -C .claude/skills/
+gh release view --repo driera/forge --json tagName --jq .tagName
 ```
 
-Skills to pull: `commit`, `define-goals`, `explore-issue`, `plan`, `implement`, `review`,
-`write-issue`, `write-adr`.
-
-Do **not** pull `start-project/` (planning repo only) or `skill-creator/` (meta-tool).
-
-> **Note (pre-forge):** Until forge is published, copy from the planning repo:
-> ```bash
-> for skill in commit define-goals explore-issue plan implement review write-issue write-adr; do
->   cp -r /path/to/portfolio/.claude/skills/$skill .claude/skills/
-> done
-> ```
-> When forge is published and tagged, add `WORKFLOW_VERSION: forge@x.x.x` to the project's
-> CLAUDE.md — that's the meaningful moment to introduce it, not before.
-
-**Checkpoint:** confirm skills are in place before continuing.
+**Checkpoint:** confirm Forge is installed before continuing.
 
 ---
 
@@ -154,6 +147,8 @@ session to resume context cleanly. Keep it accurate and concise.
 ## Project
 
 **<Project name>** — <one-line description>
+
+`WORKFLOW_VERSION: forge@<version>`
 
 ---
 
@@ -203,8 +198,7 @@ docs: document token system approach
 - **Clean code + functional patterns** — no shortcuts for speed
 ```
 
-Replace `<placeholders>` with project-specific values. Add the GitHub Projects link after
-step 8.
+Replace `<placeholders>` with project-specific values. Add the GitHub Projects link after step 9.
 
 ---
 
