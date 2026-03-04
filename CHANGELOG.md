@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to forge are documented here.
+All notable changes to Forge are documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 Versioning follows [Semantic Versioning](https://semver.org/).
@@ -8,6 +8,10 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 ---
 
 ## [Unreleased]
+
+---
+
+## [1.0.0] — 2026-03-04
 
 ### Added
 - Initial skill set: `commit`, `define-goals`, `explore-issue`, `implement`, `plan`,
