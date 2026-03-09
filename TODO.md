@@ -17,7 +17,7 @@ Any user other than `driera` gets a 404 on milestone fetch. The handle should be
 
 ---
 
-## 2. Bug: plugin path references are broken across three skills
+## ✅ 2. Bug: plugin path references are broken across three skills
 
 **Files:** `skills/explore-issue/SKILL.md`, `skills/write-adr/SKILL.md`, `skills/implement/SKILL.md`
 

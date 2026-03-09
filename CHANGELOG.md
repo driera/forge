@@ -11,6 +11,15 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [1.1.2] — 2026-03-07
+
+### Fixed
+- `explore-issue`, `write-adr`, `implement`: replaced hardcoded `.claude/skills/...` paths
+  with base-directory-relative references. Skills now resolve templates and scripts from
+  `Base directory for this skill` provided in the system context, compatible with the plugin model.
+
+---
+
 ## [1.1.1] — 2026-03-07
 
 ### Fixed

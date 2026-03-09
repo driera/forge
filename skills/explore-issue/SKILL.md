@@ -68,7 +68,7 @@ Ask one question at a time. Prefer multiple choice — it's faster to answer. Fo
 
 Give the user a short summary — a few sentences covering the problem, who it's for, what success looks like, and any notable edge cases or constraints. Then ask: "Does this capture the problem correctly? Anything to correct before I design?"
 
-When they confirm, write `sessions/NNN-issue-title/exploration.md` using the template at `.claude/skills/explore-issue/templates/exploration.md`.
+When they confirm, write `sessions/NNN-issue-title/exploration.md` using the template at `templates/exploration.md` relative to this skill's base directory (provided in the system context as `Base directory for this skill: <path>`).
 
 ---
 
@@ -93,7 +93,7 @@ Be ready to go back and revise. If a later section reveals a problem with an ear
 
 ### 9. Write design.md
 
-Once the user approves the full design, write to `sessions/NNN-issue-title/design.md` using the template at `.claude/skills/explore-issue/templates/design.md`.
+Once the user approves the full design, write to `sessions/NNN-issue-title/design.md` using the template at `templates/design.md` relative to this skill's base directory (provided in the system context as `Base directory for this skill: <path>`).
 
 ### 10. ADR offers — two distinct paths
 

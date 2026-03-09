@@ -57,9 +57,9 @@ See entry modes above. Don't proceed to writing until the decision is clear and 
 
 ## Step 2 — Determine the next ADR number
 
-Run:
+Read the base directory from the system context (`Base directory for this skill: <path>`), then run:
 ```bash
-.claude/skills/write-adr/scripts/next-number.sh
+<base-dir>/scripts/next-number.sh
 ```
 
 This reads `docs/ADRs/` and returns the next sequential number (e.g. `003`).
@@ -68,7 +68,7 @@ If `docs/ADRs/` doesn't exist, create it and the script will start at `001`.
 
 ## Step 3 — Draft the ADR
 
-Fill the template at `.claude/skills/write-adr/templates/adr.md` with:
+Fill the template at `templates/adr.md` relative to this skill's base directory (provided in the system context as `Base directory for this skill: <path>`) with:
 - `{NUMBER}` — from step 2
 - `{TITLE}` — short, decision-focused title
 - `{DATE}` — today's date (YYYY-MM-DD)

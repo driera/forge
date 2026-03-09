@@ -44,7 +44,7 @@ Follow TDD:
 2. Confirm they fail
 3. Implement the minimum code to make them pass
 4. Refactor if needed — clean up without changing behaviour
-5. Run all validations using `.claude/skills/implement/scripts/validate.sh` (or project-specific equivalent)
+5. Run all validations using `scripts/validate.sh` relative to this skill's base directory (provided in the system context as `Base directory for this skill: <path>`). The script detects what npm scripts exist in `package.json` and only runs those — safe to run even on a partially configured project.
 6. Mark the task as done:
 ```
 - [~] Task name  →  - [x] Task name
