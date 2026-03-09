@@ -200,7 +200,11 @@ Replace `<placeholders>` with project-specific values. Add the GitHub Projects l
 
 ---
 
-## Step 7 — Write the issue template
+## Step 7 — Write the issue templates
+
+Write two templates in `.github/ISSUE_TEMPLATE/`.
+
+**user-story.md** — for product features and user-facing improvements:
 
 ```markdown
 <!-- .github/ISSUE_TEMPLATE/user-story.md -->
@@ -233,6 +237,42 @@ Constraints, approach hints, ADR references.
 - [ ] Tests passing
 - [ ] Code reviewed
 - [ ] Docs updated
+- [ ] PR linked and merged
+```
+
+**task.md** — for engineering work not tied to a user-facing outcome (toolchain, refactors, infrastructure, dependencies):
+
+```markdown
+<!-- .github/ISSUE_TEMPLATE/task.md -->
+---
+name: Task
+about: Engineering work
+labels: ''
+assignees: ''
+---
+
+## Problem
+
+What is broken, missing, or needs addressing?
+
+## Context
+
+Background, why it matters, what it affects.
+
+## Proposed Solution
+
+Direction or approach. Not prescriptive — refined during exploration.
+
+## Acceptance Criteria
+
+- [ ] Specific, testable criterion
+- [ ] Tests written and passing (if applicable)
+- [ ] Docs updated (if applicable)
+
+## Definition of Done
+
+- [ ] Tests passing
+- [ ] Code reviewed
 - [ ] PR linked and merged
 ```
 

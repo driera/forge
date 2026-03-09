@@ -105,7 +105,7 @@ No current skill creates these. `setup-project` is infrastructure only. `define-
 
 ---
 
-## 9. Gap: only one issue template, only one issue type
+## ✅ 9. Gap: only one issue template, only one issue type
 
 The skill ecosystem only scaffolds a `user-story` issue template, and `write-issue` only drafts in user-story format. Engineering work — toolchain setup, refactors, dependency upgrades, infrastructure — does not fit the "As a user, I want... so that..." format.
 

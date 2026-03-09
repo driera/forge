@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Versioned Claude skills for structured agentic software development",
-    "version": "1.1.2"
+    "version": "1.2.0"
   },
   "plugins": [
     {

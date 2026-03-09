@@ -1,11 +1,11 @@
 ---
 name: write-issue
-description: Creates a GitHub issue in user-story format. Use this skill whenever the user wants to create an issue — whether they say "write an issue", "create an issue", "let's add an issue for X", "open a ticket for", or similar. The user provides the what and why; the skill asks clarifying questions if needed, drafts the full issue, lets the user refine it, then creates it on GitHub after confirmation. Always invoke this skill for issue creation requests.
+description: Creates a GitHub issue — either a user story or an engineering task. Use this skill whenever the user wants to create an issue — whether they say "write an issue", "create an issue", "let's add an issue for X", "open a ticket for", or similar. The user provides the what and why; the skill determines the issue type, asks clarifying questions if needed, drafts the full issue, lets the user refine it, then creates it on GitHub after confirmation. Always invoke this skill for issue creation requests.
 ---
 
 # write-issue
 
-Turn a user's idea into a well-formed GitHub issue in user-story format — with clear acceptance criteria, context, and technical notes — then create it on GitHub.
+Turn a user's idea into a well-formed GitHub issue, then create it on GitHub. Supports two issue types: **user-story** (product features, user-facing improvements) and **task** (engineering work — toolchain, refactors, infrastructure, dependencies).
 
 ---
 
@@ -27,32 +27,39 @@ If `GOALS.md` exists in the project root, read it. Use it to understand the prod
 
 ---
 
-## Step 2 — Clarify what's missing
+## Step 2 — Determine issue type
 
-If the user already described the issue when triggering the skill (e.g. "write an issue for keyboard navigation in the button component"), use that as your starting point and draft directly — don't re-ask what they just told you. Ask only for what's genuinely still missing.
+Infer the type from the user's description:
 
-Things to check for:
+- **user-story** — the outcome benefits an end user directly ("as a user, I want to…", feature work, UI, UX)
+- **task** — engineering work with no direct user-facing outcome (toolchain setup, refactors, dependency upgrades, infrastructure, CI)
 
-- **Subject** — who is this for? (if not obvious from the "what")
-- **Acceptance criteria** — what does done look like, specifically and testably?
-- **Technical notes** — any constraints, approach hints, ADR references, or
-  dependencies the implementer should know about?
-- **References** — designs, related issues, external docs?
-
-Ask only what you genuinely need. Don't pepper the user with questions if the intent
-is already clear.
+If the type is ambiguous, ask: "Is this user-facing or engineering work?"
 
 ---
 
-## Step 3 — Draft the issue
+## Step 3 — Clarify what's missing
 
-Write a title and body using the template below.
+If the user already described the issue when triggering the skill, use that as your starting point and draft directly — don't re-ask what they just told you. Ask only for what's genuinely still missing.
+
+**For user-story:**
+- **Subject** — who is this for? (if not obvious)
+- **Acceptance criteria** — what does done look like, specifically and testably?
+- **Technical notes** — constraints, ADR references, dependencies?
+
+**For task:**
+- **Problem** — what is broken, missing, or needs addressing? (if not clear)
+- **Proposed solution** — any direction or approach already in mind?
+
+Ask only what you genuinely need. Don't pepper the user with questions if the intent is already clear.
+
+---
+
+## Step 4 — Draft the issue
+
+### User story
 
 **Title format**: `As a <subject>, I want <action> so that <outcome>`
-
-Keep it on one line, imperative, specific. The title is the user story itself.
-
-**Body template:**
 
 ```markdown
 ## As a [subject], I want [action] so that [outcome]
@@ -80,22 +87,48 @@ Keep it on one line, imperative, specific. The title is the user story itself.
 - [ ] PR linked and merged
 ```
 
-Good acceptance criteria are **testable** and **specific**. "Works correctly" is not
-a criterion. "User sees an error message when the field is empty" is.
+Good acceptance criteria are **testable** and **specific**. "Works correctly" is not a criterion. "User sees an error message when the field is empty" is.
 
-Technical Notes can be brief or empty if there's nothing relevant — but if the user
-mentioned constraints or references, include them here.
+### Task
+
+**Title format**: short imperative description of the engineering work (e.g. "Set up ESLint", "Migrate state to Zustand")
+
+```markdown
+## Problem
+
+[What is broken, missing, or needs addressing?]
+
+## Context
+
+[Background, why it matters, what it affects.]
+
+## Proposed Solution
+
+[Direction or approach. Not prescriptive — refined during exploration.]
+
+## Acceptance Criteria
+
+- [ ] [Specific, testable criterion]
+- [ ] Tests written and passing (if applicable)
+- [ ] Docs updated (if applicable)
+
+## Definition of Done
+
+- [ ] Tests passing
+- [ ] Code reviewed
+- [ ] PR linked and merged
+```
 
 ---
 
-## Step 4 — Show the draft and refine
+## Step 5 — Show the draft and refine
 
 Present the full title and body to the user. Wait for their feedback. Revise until
 they're satisfied.
 
 ---
 
-## Step 5 — Create the issue on GitHub
+## Step 6 — Create the issue on GitHub
 
 Resolve the repo owner and name from the git remote:
 

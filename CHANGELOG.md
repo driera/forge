@@ -11,6 +11,18 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [1.2.0] — 2026-03-07
+
+### Added
+- `setup-project`: scaffolds two issue templates — `user-story.md` and `task.md`.
+  `task.md` covers engineering work (toolchain, refactors, infrastructure) with a
+  Problem / Context / Proposed Solution structure.
+- `write-issue`: supports two issue types. Infers type from context (user-story vs task)
+  and drafts using the appropriate template. Task titles use short imperative format
+  instead of user-story format.
+
+---
+
 ## [1.1.2] — 2026-03-07
 
 ### Fixed
