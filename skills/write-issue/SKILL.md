@@ -97,10 +97,18 @@ they're satisfied.
 
 ## Step 5 — Create the issue on GitHub
 
-Once confirmed, fetch the open milestones for this repo:
+Resolve the repo owner and name from the git remote:
 
 ```bash
-gh api repos/driera/<name>/milestones --jq '.[].title'
+git remote get-url origin
+```
+
+Parse `owner` and `repo` from the output. Handles both HTTPS (`https://github.com/owner/repo.git`) and SSH (`git@github.com:owner/repo.git`) formats. If parsing fails, fall back to `gh auth status` to get the authenticated handle.
+
+Fetch the open milestones for this repo:
+
+```bash
+gh api repos/<owner>/<repo>/milestones --jq '.[].title'
 ```
 
 - **One milestone** — use it automatically
@@ -120,10 +128,10 @@ Then add the issue to the project board:
 
 ```bash
 # Get the issue number from the URL returned above
-gh project item-add <project-number> --owner driera --url <issue-url>
+gh project item-add <project-number> --owner <owner> --url <issue-url>
 ```
 
-To find the project number, run `gh project list --owner driera` if you don't already have it.
+To find the project number, run `gh project list --owner <owner>` if you don't already have it.
 
 Show the user the issue URL when done. Then close with:
 

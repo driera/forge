@@ -11,6 +11,15 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [1.1.1] — 2026-03-07
+
+### Fixed
+- `write-issue`: resolved hardcoded `driera` GitHub handle. Owner and repo are now
+  parsed from `git remote get-url origin`, with fallback to `gh auth status`. Works
+  for any GitHub account or organisation.
+
+---
+
 ## [1.1.0] — 2026-03-05
 
 ### Added
