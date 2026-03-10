@@ -67,14 +67,25 @@ This connects to the broader backlog gap (see item 7).
 
 **File:** `skills/review/SKILL.md` — Step 4
 
-When no blocking issues are found, the skill says "Ready to merge." and stops. There is no step for:
+When no blocking issues are found, the skill says "Ready to merge." and stops. There is no step for closing the issue, updating milestone progress, or checking whether a goal is now achieved.
 
-- Opening or linking the pull request
-- Merging
-- Closing the issue
-- Updating milestone progress
+**Trunk-based development context:** no branches or PRs. Work lands directly on main. So "merge" is implicit — the closing sequence is: close the GitHub issue, check milestone progress, check if any GOALS.md goal is now done.
 
-The delivery loop (`explore-issue` → `plan` → `implement` → `review`) has no closing ceremony. Work disappears into "ready to merge" with no record that the issue was resolved or the milestone advanced.
+**Two exit paths from `review`:**
+1. No blockers → issue is done → needs a closing sequence
+2. Blockers found → new tasks created → back into `plan` or `implement`
+
+Closing only happens on exit path 1. It requires judgment — is this goal actually done? does this issue complete the milestone? — so it's not purely mechanical.
+
+**Proposed direction:** a dedicated `/ship` skill (not `/close-issue`) invoked explicitly on exit path 1. It owns the full wiring:
+- Close the GitHub issue
+- Check milestone: if all issues done, close it
+- Check GOALS.md: if a goal is now achieved, mark it done
+- Invoke `commit` for any artifact updates
+
+`review` on exit path 1 ends with: "No blockers. Run `/ship` to close the issue and update progress."
+
+**What not to do:** don't add closing steps inside `review` — review has two exits and closing logic would only apply to one of them. A separate skill keeps the boundary clean.
 
 ---
 
