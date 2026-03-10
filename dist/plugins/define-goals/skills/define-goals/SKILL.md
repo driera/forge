@@ -74,9 +74,46 @@ Only add this section if genuine prerequisites exist. Skip it if none apply — 
 
 ### 5. Save GOALS.md
 
-Confirm the target project directory with the user before writing — write to the root of that project. The skill is done — no handoff.
+Confirm the target project directory with the user before writing — write to the root of that project.
 
 The file will be linked from the README's Status section (`[Goals →](GOALS.md)`) thanks to the start-project bootstrap.
+
+### 6. Propose first product issues
+
+Based on the active goals, propose the first product issues for the backlog. Each active goal
+typically maps to one or more user stories — suggest the most obvious ones, but don't force
+a 1:1 mapping.
+
+Present the proposed list to the user:
+
+> "Here are the product issues I'd suggest as your starting backlog. Add, remove, or
+> reorder before I write them to BACKLOG.md:
+>
+> - [ ] As a <user>, I want <action> so that <outcome>
+> - [ ] ..."
+
+Wait for confirmation. Then write to `BACKLOG.md` in the project root:
+
+```markdown
+# Backlog
+
+Bootstrap backlog — initial issues to create before the delivery loop begins.
+Work through these with `/write-issue` one by one.
+
+## Product issues
+
+- [ ] **<title>** — <one-line description> _(user-story)_
+```
+
+### 7. Hand off to define-tech
+
+Invoke the `commit` skill to commit `GOALS.md` and `BACKLOG.md`.
+Suggested message: `docs: define product goals and initial product backlog`
+
+Then tell the user:
+
+> "Goals are defined and the product backlog is seeded. Next: define the tech stack and
+> toolchain. Run `/define-tech` to continue."
 
 ---
 
@@ -182,5 +219,5 @@ priority. List order is the priority signal; no explicit priority field is neede
 - Don't let goals describe solutions, features, or implementation details
 - Don't invent goals the user hasn't expressed — ask, don't assume
 - Don't add more goals than the scope calls for; 3–6 is healthy for a v1
-- Don't create tasks or issues — goals are product scope, not work items
-- Don't handoff to `write-issue` — the user decides when to start creating issues
+- Don't create tasks or issues directly — propose them to BACKLOG.md and let the user confirm
+- Don't handoff to `write-issue` directly — hand off to `define-tech` instead; `write-issue` comes after both skills have seeded the backlog

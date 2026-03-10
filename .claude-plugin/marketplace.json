@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Versioned Claude skills for structured agentic software development",
-    "version": "1.2.1"
+    "version": "1.3.0"
   },
   "plugins": [
     {
@@ -16,6 +16,14 @@
       "skills": ["./skills/commit"],
       "category": "git",
       "keywords": ["git", "commits", "conventional-commits"]
+    },
+    {
+      "name": "define-tech",
+      "description": "Defines the tech stack and toolchain for a new project. Reads product goals, leads a conversation about language, framework, package manager, linter, type checker, test runner, build tool, and deploy target, then writes TECH.md and generates a tailored CI workflow. Proposes first engineering task issues to BACKLOG.md and hands off to write-issue. Use this whenever the user says \"define tech\", \"set up the toolchain\", \"what stack should we use\", or after define-goals hands off during project inception.",
+      "source": "./dist/plugins/define-tech",
+      "skills": ["./skills/define-tech"],
+      "category": "planning",
+      "keywords": ["planning", "tech-stack", "toolchain", "ci", "inception"]
     },
     {
       "name": "define-goals",

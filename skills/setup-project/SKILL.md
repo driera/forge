@@ -64,7 +64,7 @@ mkdir -p sessions
 This creates:
 - `docs/ADRs/` — ADRs, written by `write-adr` during design
 - `.github/ISSUE_TEMPLATE/` — issue template for user stories
-- `.github/workflows/` — CI configuration
+- `.github/workflows/` — CI configuration (populated by `define-tech` → CI task)
 - `sessions/` — per-issue work artifacts (exploration.md, design.md, plan.md)
 
 **Checkpoint:** confirm directory structure created before continuing.
@@ -99,7 +99,7 @@ If the user provided skills showcased in step 1, use those. Otherwise, derive fr
 ## Status
 
 Current milestone: `MVP — in progress`
-[Goals →](GOALS.md) · [Roadmap →](<GitHub Projects link — add after step 9>)
+[Goals →](GOALS.md) · [Tech →](TECH.md) · [Roadmap →](<GitHub Projects link — add after step 8>)
 
 ## Development
 
@@ -278,66 +278,10 @@ Direction or approach. Not prescriptive — refined during exploration.
 
 ---
 
-## Step 8 — CI/CD baseline
-
-Write the baseline CI workflow file at `.github/workflows/ci.yml`:
-
-```yaml
-name: CI
-
-on:
-  pull_request:
-    branches: [main]
-  push:
-    branches: [main]
-
-jobs:
-  ci:
-    name: Lint, Type-check, Test, Build
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: lts/*
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Lint
-        run: npm run lint
-        if: ${{ success() }}
-
-      - name: Type-check
-        run: npm run typecheck
-        if: ${{ success() }}
-        continue-on-error: true  # remove if project has strict typecheck script
-
-      - name: Test
-        run: npm test -- --run
-        if: ${{ success() }}
-
-      - name: Build
-        run: npm run build
-        if: ${{ success() }}
-```
-
-This adds lint + test + build on every PR — deterministic, no model variance.
-Project-specific CD (Storybook deploy, Vercel, etc.) is handled in the first relevant
-`explore-issue` session, not at bootstrap time.
-
-**Checkpoint:** confirm CI workflow file is in place before continuing.
-
----
-
-## Step 9 — GitHub Projects and milestone
+## Step 8 — GitHub Projects and milestone
 
 Create the MVP milestone. The description comes from GOALS.md after `define-goals` runs —
-leave a placeholder for now, update after step 10:
+leave a placeholder for now, update after step 9:
 
 ```bash
 gh api repos/<handle>/<name>/milestones \
@@ -362,7 +306,7 @@ CLAUDE.md and the README Status section.
 
 ---
 
-## Step 10 — Initial commit
+## Step 9 — Initial commit
 
 Invoke the `commit` skill. Suggested message: `chore: bootstrap project structure and workflow`.
 
@@ -378,14 +322,16 @@ Wait for the user to confirm the push is complete before continuing.
 
 ---
 
-## Step 11 — Hand off to define-goals
+## Step 10 — Hand off to define-goals
 
 Tell the user:
 
-> "Repo is live at github.com/<handle>/<name>. Next step: define the product goals — what
-> this project needs to achieve, for whom, and in what order of priority. Open the new
-> project repo and run `/define-goals` to start."
+> "Repo is live at github.com/<handle>/<name>. Next: define what this project needs to
+> achieve. Open the new project repo and run `/define-goals` to start."
 
-`define-goals` will create `GOALS.md` — the product source of truth for the project.
-Goals drive issues; issues drive the delivery loop. Nothing gets built without a goal
-behind it.
+The full inception chain from here:
+```
+define-goals → BACKLOG.md (product issues)
+             → define-tech → BACKLOG.md (engineering tasks) → CI workflow
+                           → write-issue (works through the full backlog)
+```

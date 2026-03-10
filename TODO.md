@@ -43,7 +43,7 @@ This agent is not listed in the skill manifest, not documented anywhere in the r
 
 ---
 
-## 4. Silent assumption: tech stack is never asked, npm is hardcoded
+## ✅ 4. Silent assumption: tech stack is never asked, npm is hardcoded
 
 **File:** `skills/setup-project/SKILL.md` — Steps 1 and 8
 
@@ -53,7 +53,7 @@ A React + Vite project, a Next.js project, and a SvelteKit project all get ident
 
 ---
 
-## 5. Lifecycle gap: `define-goals` ends with no guidance
+## ✅ 5. Lifecycle gap: `define-goals` ends with no guidance
 
 **File:** `skills/define-goals/SKILL.md` — Inception mode, Step 5
 
@@ -90,7 +90,7 @@ This is not a single-skill fix. It is a tone and interaction design principle th
 
 ---
 
-## 8. Gap: no skill owns the creation of toolchain issues at project start
+## ✅ 8. Gap: no skill owns the creation of toolchain issues at project start
 
 The workflow goes `setup-project` → `define-goals` → `explore-issue`, but there is no step that seeds the initial engineering backlog. For any React/frontend project, before product work can start, the following tooling concerns need to exist as issues:
 
@@ -102,6 +102,18 @@ The workflow goes `setup-project` → `define-goals` → `explore-issue`, but th
 - CI workflow (depends on all of the above)
 
 No current skill creates these. `setup-project` is infrastructure only. `define-goals` explicitly does not create issues. There is an ownership gap between bootstrapping and the first `explore-issue` call.
+
+---
+
+## 10. Gap: no skill owns the outer delivery loop
+
+After bootstrap and the initial backlog are created, the workflow relies entirely on the user to manage the backlog, pick the next issue, and decide when to reprioritize or evolve goals. No skill covers:
+
+- Sprint planning or issue prioritization
+- Deciding what to work on next from GitHub Projects
+- Knowing when to run `/define-goals` again to evolve product scope
+
+The delivery loop (`explore-issue` → `plan` → `implement` → `review`) is well defined per issue, but the outer loop — across issues and sprints — has no owner. This may warrant a new skill (`plan-sprint`?) or a convention documented in CLAUDE.md templates.
 
 ---
 
