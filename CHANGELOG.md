@@ -11,6 +11,13 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [1.2.1] — 2026-03-10
+
+### Fixed
+- `explore-issue`: Step 4 now includes explicit dispatch instructions for the `codebase-explorer` agent — what to populate `{ISSUE_SUMMARY}` and `{SEARCH_TARGETS}` with, and how to use the output in subsequent steps.
+
+---
+
 ## [1.2.0] — 2026-03-07
 
 ### Added

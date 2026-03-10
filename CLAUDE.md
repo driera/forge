@@ -59,6 +59,18 @@ docs: update code-reviewer template
 
 ---
 
+## Collaboration protocol
+
+When tackling TODO items:
+
+1. **Ambiguities first** — present open questions one at a time (or batched if related), each with options and a preferred pick with a brief reason. Wait for feedback before proceeding.
+2. **Proposal** — once ambiguities are resolved, present the full proposed change.
+3. **Confirm** — wait for confirmation, then write.
+
+Small/contained items → one ambiguity at a time. Multiple related ambiguities → batch in one message.
+
+---
+
 ## Principles
 
 - Each skill must be self-contained — no references to private repos or personal paths

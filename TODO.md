@@ -31,7 +31,7 @@ These skills reference local file paths that assume the skills are copied into t
 
 ---
 
-## 3. Hidden dependency: `codebase-explorer` agent is undocumented
+## ✅ 3. Hidden dependency: `codebase-explorer` agent is undocumented
 
 **File:** `skills/explore-issue/SKILL.md` — Step 4
 

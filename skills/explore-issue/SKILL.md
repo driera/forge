@@ -56,7 +56,11 @@ Read `CLAUDE.md` if it exists. Note the tech stack, conventions, and any constra
 
 First, check whether the repo contains implementation files related to the issue — components, modules, or tests (not just config, tooling, or docs). A quick Glob or Grep against terms from the issue title and acceptance criteria is enough.
 
-**If relevant implementation files exist:** dispatch the `codebase-explorer` agent with the issue title, user story, and acceptance criteria as context. Use its findings to inform your problem understanding. Reserve direct Grep/Glob searches for targeted lookups that the agent's output raises.
+**If relevant implementation files exist:** dispatch the `codebase-explorer` agent using the template at `agents/codebase-explorer.md` relative to this skill's base directory. Populate it with:
+- `{ISSUE_SUMMARY}` — the issue title plus a one-line summary of the user story
+- `{SEARCH_TARGETS}` — key terms from the issue title and acceptance criteria
+
+Use the agent's findings (relevant files, existing patterns, gaps) to inform your problem understanding in Steps 5 and 6.
 
 **If only config, tooling, or docs exist** (e.g. a freshly bootstrapped repo with no source code yet): note that the issue likely introduces new code and move on — no agent dispatch needed.
 
