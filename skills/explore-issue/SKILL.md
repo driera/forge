@@ -1,6 +1,6 @@
 ---
 name: explore-issue
-description: Entry point to the delivery loop. Fetches a GitHub issue, explores its problem space, then drives the design through dialogue — covering architecture, components, data flow, error handling, and testing — before handing off to plan. Use this whenever the user says "explore issue NNN", "work on NNN", "let's start issue NNN", "pick up issue NNN", or similar. Also triggers when the user says "explore issue" or "next issue" with no number — in that case, fetch open issues and let the user choose.
+description: Entry point to the delivery loop. Fetches a GitHub issue (or accepts a manual description if GitHub isn't available), explores its problem space, then drives the design through dialogue — covering architecture, components, data flow, error handling, and testing — before handing off to plan. Use this whenever the user says "explore issue NNN", "work on NNN", "let's start issue NNN", "pick up issue NNN", or similar. Also triggers when the user says "explore issue" or "next issue" with no number — in that case, fetch open issues and let the user choose.
 ---
 
 # explore-issue
@@ -18,6 +18,10 @@ Two phases in one conversation: understand the problem, then design the solution
 gh issue view NNN --json number,title,body,labels,milestone,state
 ```
 
+If this fails (no GitHub repo, auth error, issue not found), fall back to manual input:
+> "Couldn't fetch a GitHub issue. Paste the issue description or tell me what you want to work on."
+Accept whatever the user provides — a JIRA ticket, a Notion doc, a plain description — and treat it as the issue body. Use `0` as the issue number and derive a session slug from the title the user gives. Continue normally from Step 2.
+
 **If no number was provided**, list open issues in a "todo" or "ready" state:
 ```bash
 gh issue list --state open --label todo
@@ -26,7 +30,9 @@ If that returns nothing, fall back to all open issues:
 ```bash
 gh issue list --state open
 ```
-Present the list and ask the user which issue to work on.
+If that also fails or returns nothing, ask the user directly:
+> "No GitHub issues found. Paste the issue description or tell me what you want to work on."
+Accept any input and continue as above.
 
 ### 2. Check for an existing session
 
@@ -35,8 +41,7 @@ Derive the session directory path: `sessions/NNN-issue-title/` (kebab-case slug 
 **If the directory exists and contains files**, open with a resume summary before doing anything else:
 
 > "I can see we've already worked on this issue:
-> - exploration.md: [one-line summary of what was captured]
-> - design.md: [approach chosen]
+> - context.md: [one-line summary of problem and approach chosen]
 > - plan.md: [N tasks, N done] _(if present)_
 >
 > Does this match where we left off? Anything to correct before we continue?"
@@ -72,7 +77,7 @@ Ask one question at a time. Prefer multiple choice — it's faster to answer. Fo
 
 Give the user a short summary — a few sentences covering the problem, who it's for, what success looks like, and any notable edge cases or constraints. Then ask: "Does this capture the problem correctly? Anything to correct before I design?"
 
-When they confirm, write `sessions/NNN-issue-title/exploration.md` using the template at `templates/exploration.md` relative to this skill's base directory (provided in the system context as `Base directory for this skill: <path>`).
+When they confirm, move to Phase 2.
 
 ---
 
@@ -97,7 +102,7 @@ Be ready to go back and revise. If a later section reveals a problem with an ear
 
 ### 9. Write design.md
 
-Once the user approves the full design, write to `sessions/NNN-issue-title/design.md` using the template at `templates/design.md` relative to this skill's base directory (provided in the system context as `Base directory for this skill: <path>`).
+Once the user approves the full design, write `sessions/NNN-issue-title/context.md` using the template at `templates/context.md` relative to this skill's base directory (provided in the system context as `Base directory for this skill: <path>`). Populate both the Problem and Solution sections — this is a single file capturing the full picture.
 
 ### 10. ADR offers — two distinct paths
 
@@ -124,9 +129,9 @@ If no decisions had meaningful tradeoffs and no questions are open, skip this st
 
 ### 11. Commit artifacts
 
-Invoke the `commit` skill to commit exploration.md and design.md (and any ADRs written).
-Suggest commit message: `docs: add exploration and design for #NNN`
+Invoke the `commit` skill to commit context.md (and any ADRs written).
+Suggest commit message: `docs: add context for #NNN`
 
 ### 12. Hand off to plan
 
-Tell the user exploration and design are saved and committed. Suggest invoking the `plan` skill next.
+Tell the user context.md is saved and committed. Suggest invoking the `plan` skill next.

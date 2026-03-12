@@ -1,6 +1,6 @@
 ---
 name: plan
-description: Reads exploration.md and design.md from the current session and produces bite-size implementation plan in plan.md. Use this whenever the user says "plan", "write the plan", "plan the implementation", or after explore-issue hands off to planning.
+description: Reads context.md from the current session and produces a bite-size implementation plan in plan.md. Use this whenever the user says "plan", "write the plan", "plan the implementation", or after explore-issue hands off to planning.
 ---
 
 # plan
@@ -10,16 +10,17 @@ Turns an approved design into an ordered sequence of tasks a skilled developer c
 ## Inputs
 
 Read these files from the session directory before writing anything:
-- `sessions/NNN-issue-title/exploration.md` — problem context, edge cases, constraints
-- `sessions/NNN-issue-title/design.md` — approved approach, architecture, components
+- `sessions/NNN-issue-title/context.md` — problem space, edge cases, constraints, approved approach, architecture, components
 - `sessions/NNN-issue-title/review.md` — if it exists, a previous review found significant issues; the new plan must address them
 - `CLAUDE.md` — project conventions, stack, patterns in use
 
-If exploration.md or design.md is missing, tell the user and stop — the plan depends on validated exploration and design.
+If context.md is missing, ask the user:
+> "No context.md found for this session. Paste your issue description, spec, or tell me what you want to plan."
+Accept any input — a JIRA ticket, a Notion doc, a plain description — and use it as the context. Continue normally.
 
 ## Plan principles
 
-**Write for someone with no domain knowledge.** The developer reading this plan is skilled but has never seen this codebase. They should not need to open exploration.md or design.md to understand what they're doing or why. Surface what matters.
+**Write for someone with no domain knowledge.** The developer reading this plan is skilled but has never seen this codebase. They should not need to open context.md to understand what they're doing or why. Surface what matters.
 
 **Bite-size tasks.** Each task should be independently executable and committable. If a task feels like it could be split, split it. The right size is roughly: write tests → implement → commit.
 
@@ -53,7 +54,7 @@ What this task achieves and why it's needed.
 
 Use cases to cover:
 - [Specific scenario or input this task must handle]
-- [Edge case from exploration.md worth naming]
+- [Edge case from context.md worth naming]
 - …
 
 Commit: `type(scope): short message`

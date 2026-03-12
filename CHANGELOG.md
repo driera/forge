@@ -11,6 +11,19 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [1.4.0] — 2026-03-12
+
+### Changed
+- `explore-issue`: merged `exploration.md` + `design.md` into a single `context.md` (Problem → Solution structure). Removed `exploration.md` as a deliverable — problem context now lives in the top half of `context.md`. Added fallback for non-GitHub users: if `gh` fails or no issue is found, skill asks for a manual description and continues normally.
+- `plan`: reads `context.md` instead of two separate files. Falls back to asking the user if no session file exists — works with JIRA, Notion, or any non-Forge input.
+- `review`: reads `context.md` instead of `design.md`.
+- `commit`: updated session artifact list to reflect `context.md`.
+- `define-tech`: removed claim of generating a CI workflow file. CI is always a backlog task — toolchain scripts must exist before CI can be wired up.
+- `write-issue`: short descriptive titles for user stories (story sentence moves to `## Goal` in body). Removed "PR linked and merged" from DoD. `Proposed Solution` is now optional for tasks — only for complex cases. Label guidance added: suggests based on context, always confirms. AC quality guidance per type: user-observable outcomes for stories, technical verifiable states for tasks. Links to referenced files encouraged.
+- `setup-project`: issue templates updated to match — `feature` / `tooling` default labels, `## Goal` for user stories, `Proposed Solution` optional for tasks, "PR linked and merged" removed from DoD.
+
+---
+
 ## [1.3.0] — 2026-03-10
 
 ### Added

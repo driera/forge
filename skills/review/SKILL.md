@@ -27,7 +27,7 @@ git log --oneline --grep="#NNN"
 This returns all commits tagged with the issue number — the exact scope of work regardless
 of branching strategy. Capture the output as `{COMMITS}`.
 
-Read `sessions/NNN-issue-title/design.md`. Note its absence if missing — proceed with the
+Read `sessions/NNN-issue-title/context.md`. Note its absence if missing — proceed with the
 issue alone. Extract: chosen approach.
 
 ## Step 2 — Fill and dispatch the code-reviewer agent
@@ -36,7 +36,7 @@ Fill the template at `.claude/skills/review/agents/code-reviewer.md` with the ga
 - `{ISSUE_NUMBER}` + `{ISSUE_TITLE}`
 - `{USER_STORY}` — the user story line from the issue
 - `{ACCEPTANCE_CRITERIA}` — full list from the issue body
-- `{DESIGN_APPROACH}` — chosen approach from design.md (or "design.md not found" if absent)
+- `{DESIGN_APPROACH}` — chosen approach from context.md (or "context.md not found" if absent)
 - `{COMMITS}` — output of `git log --oneline --grep="#NNN"`
 
 Dispatch as a Task agent. The agent receives only the filled template.

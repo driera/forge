@@ -59,18 +59,21 @@ Ask only what you genuinely need. Don't pepper the user with questions if the in
 
 ### User story
 
-**Title format**: `As a <subject>, I want <action> so that <outcome>`
+**Title format**: short descriptive title (e.g. "Login with Google", "Empty state for task list")
 
 ```markdown
-## As a [subject], I want [action] so that [outcome]
+## Goal
+
+As a [subject], I want [action] so that [outcome].
 
 ## Context
 
-[Why does this exist? What problem does it solve? What's the background?]
+[Why does this exist? What problem does it solve? What's the background?
+Link any referenced files — e.g. [GOALS.md](../GOALS.md), [TECH.md](../TECH.md).]
 
 ## Acceptance Criteria
 
-- [ ] [Specific, testable criterion]
+- [ ] [User-observable outcome — what the user sees or experiences]
 - [ ] A11y: passes axe with zero violations (if UI component)
 - [ ] Tests written and passing
 - [ ] Docs updated (if applicable)
@@ -84,10 +87,9 @@ Ask only what you genuinely need. Don't pepper the user with questions if the in
 - [ ] Tests passing
 - [ ] Code reviewed
 - [ ] Docs updated
-- [ ] PR linked and merged
 ```
 
-Good acceptance criteria are **testable** and **specific**. "Works correctly" is not a criterion. "User sees an error message when the field is empty" is.
+Good acceptance criteria describe **what a user observes**, not what the code does. "Works correctly" is not a criterion. "User sees an error message when the field is empty" is.
 
 ### Task
 
@@ -100,15 +102,14 @@ Good acceptance criteria are **testable** and **specific**. "Works correctly" is
 
 ## Context
 
-[Background, why it matters, what it affects.]
+[Background, why it matters, what it affects.
+Link any referenced files — e.g. [TECH.md](../TECH.md).]
 
-## Proposed Solution
-
-[Direction or approach. Not prescriptive — refined during exploration.]
+<!-- Proposed Solution: include only for complex tasks where the approach isn't obvious. Omit for straightforward setup tasks. -->
 
 ## Acceptance Criteria
 
-- [ ] [Specific, testable criterion]
+- [ ] [Technical verifiable state — what is true about the system when done]
 - [ ] Tests written and passing (if applicable)
 - [ ] Docs updated (if applicable)
 
@@ -116,8 +117,9 @@ Good acceptance criteria are **testable** and **specific**. "Works correctly" is
 
 - [ ] Tests passing
 - [ ] Code reviewed
-- [ ] PR linked and merged
 ```
+
+Good acceptance criteria for tasks describe **verifiable technical states** — "ESLint runs with zero errors on `npm run lint`", not "add ESLint config".
 
 ---
 
@@ -129,6 +131,8 @@ they're satisfied.
 ---
 
 ## Step 6 — Create the issue on GitHub
+
+Ask the user which label to apply. Suggest a starting point based on context — `feature` for user stories, `tooling` for toolchain/infrastructure tasks, `bug` for fixes, `chore` for maintenance. The user confirms or overrides before the issue is created.
 
 Resolve the repo owner and name from the git remote:
 
@@ -154,6 +158,7 @@ Then create the issue:
 gh issue create \
   --title "<title>" \
   --body "<body>" \
+  --label "<label>" \
   --milestone "<milestone-title>"   # omit if no milestones exist
 ```
 

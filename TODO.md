@@ -1,6 +1,104 @@
 # TODO
 
-Issues ordered by severity — tackle top to bottom.
+Issues ordered by number, descending — highest (most recent) first.
+
+---
+
+## 10. Gap: no skill owns the outer delivery loop
+
+After bootstrap and the initial backlog are created, the workflow relies entirely on the user to manage the backlog, pick the next issue, and decide when to reprioritize or evolve goals. No skill covers:
+
+- Sprint planning or issue prioritization
+- Deciding what to work on next from GitHub Projects
+- Knowing when to run `/define-goals` again to evolve product scope
+
+The delivery loop (`explore-issue` → `plan` → `implement` → `review`) is well defined per issue, but the outer loop — across issues and sprints — has no owner. This may warrant a new skill (`plan-sprint`?) or a convention documented in CLAUDE.md templates.
+
+---
+
+## 7. Design vision gap: advisory tone is absent across all skills
+
+Skills currently execute — they don't propose. No skill opens with a suggestion and asks for validation before acting. The intended experience is:
+
+> "As I know how to help you, here's what I'd suggest for this step: [proposal]. Does this match where you want to go? Any changes before I proceed?"
+
+This consultative moment is missing everywhere. `setup-project` creates things without proposing the structure. `define-goals` interviews without framing what a healthy outcome looks like. `explore-issue` is the closest — it proposes approaches and asks section by section — but even it doesn't open with an upfront orientation.
+
+This is not a single-skill fix. It is a tone and interaction design principle that needs to be applied across the whole skill set, starting with `setup-project` and `define-goals` where first impressions are formed.
+
+---
+
+## 6. Lifecycle gap: `review` ends before the lifecycle closes
+
+**File:** `skills/review/SKILL.md` — Step 4
+
+When no blocking issues are found, the skill says "Ready to merge." and stops. There is no step for closing the issue, updating milestone progress, or checking whether a goal is now achieved.
+
+**Trunk-based development context:** no branches or PRs. Work lands directly on main. So "merge" is implicit — the closing sequence is: close the GitHub issue, check milestone progress, check if any GOALS.md goal is now done.
+
+**Two exit paths from `review`:**
+1. No blockers → issue is done → needs a closing sequence
+2. Blockers found → new tasks created → back into `plan` or `implement`
+
+Closing only happens on exit path 1. It requires judgment — is this goal actually done? does this issue complete the milestone? — so it's not purely mechanical.
+
+**Proposed direction:** a dedicated `/ship` skill (not `/close-issue`) invoked explicitly on exit path 1. It owns the full wiring:
+- Close the GitHub issue
+- Check milestone: if all issues done, close it
+- Check GOALS.md: if a goal is now achieved, mark it done
+- Invoke `commit` for any artifact updates
+
+`review` on exit path 1 ends with: "No blockers. Run `/ship` to close the issue and update progress."
+
+**What not to do:** don't add closing steps inside `review` — review has two exits and closing logic would only apply to one of them. A separate skill keeps the boundary clean.
+
+---
+
+---
+
+## Done
+
+---
+
+## ✅ 12. Update `write-issue` skill
+
+Short descriptive titles, story sentence moved to `## Goal` in body. Removed "PR linked and merged" from DoD. `Proposed Solution` made optional for complex tasks only. Label guidance added — suggests based on context, always confirms. AC quality guidance per type: user-observable for stories, technical verifiable states for tasks. Links to referenced files encouraged.
+
+---
+
+## ✅ 11. Update `define-tech` skill
+
+Removed CI workflow generation — CI was never generated anywhere, only claimed. The skill now correctly seeds CI as a backlog task. Commit no longer references `.github/workflows/ci.yml`.
+
+---
+
+## ✅ 15. `plan` has no fallback for missing session files
+
+**File:** `skills/plan/SKILL.md` — Inputs
+
+`plan` hard-stops if `exploration.md` or `design.md` is missing. But a user may arrive at `plan` from a Notion spec, a JIRA ticket, a verbal description, or any non-Forge workflow — none of which produce session files.
+
+**Proposed fix:** if expected files are absent, ask the user to describe the work or point to a file, then proceed normally.
+
+---
+
+## ✅ 13. `explore-issue` has no fallback for non-GitHub users
+
+**File:** `skills/explore-issue/SKILL.md` — Step 1
+
+Step 1 is entirely `gh` CLI. If the user tracks issues in JIRA, Linear, Notion, or any other platform, the skill has no path forward — it either errors or leaves the user stuck.
+
+**Proposed fix:** if `gh issue view` fails or no GitHub issue is found, fall back to asking the user directly: "Couldn't find a GitHub issue. Paste the issue description or tell me what you want to work on." The rest of the skill runs identically from that point.
+
+---
+
+## ✅ 14. Merge `exploration.md` into `design.md`
+
+`exploration.md` is intermediate work — it captures problem understanding before design. No skill after `plan` reads it, and `review` ignores it entirely. `plan` reads it only for problem context and edge cases, which a complete `design.md` should already carry.
+
+**Proposed change:** remove `exploration.md` as a separate deliverable. `design.md` gains a brief problem context section at the top. `explore-issue` writes one file, `plan` reads one file.
+
+**Affected:** `skills/explore-issue/SKILL.md`, `skills/plan/SKILL.md`, `skills/commit/SKILL.md`, `skills/setup-project/SKILL.md` (directory scaffold + templates).
 
 ---
 
@@ -59,46 +157,6 @@ A React + Vite project, a Next.js project, and a SvelteKit project all get ident
 
 After writing `GOALS.md`, the skill explicitly states: "The skill is done — no handoff." The user is left with a goals document and no signal about what comes next. The natural next step — creating the first issues — has no owner and no prompt.
 
-This connects to the broader backlog gap (see item 7).
-
----
-
-## 6. Lifecycle gap: `review` ends before the lifecycle closes
-
-**File:** `skills/review/SKILL.md` — Step 4
-
-When no blocking issues are found, the skill says "Ready to merge." and stops. There is no step for closing the issue, updating milestone progress, or checking whether a goal is now achieved.
-
-**Trunk-based development context:** no branches or PRs. Work lands directly on main. So "merge" is implicit — the closing sequence is: close the GitHub issue, check milestone progress, check if any GOALS.md goal is now done.
-
-**Two exit paths from `review`:**
-1. No blockers → issue is done → needs a closing sequence
-2. Blockers found → new tasks created → back into `plan` or `implement`
-
-Closing only happens on exit path 1. It requires judgment — is this goal actually done? does this issue complete the milestone? — so it's not purely mechanical.
-
-**Proposed direction:** a dedicated `/ship` skill (not `/close-issue`) invoked explicitly on exit path 1. It owns the full wiring:
-- Close the GitHub issue
-- Check milestone: if all issues done, close it
-- Check GOALS.md: if a goal is now achieved, mark it done
-- Invoke `commit` for any artifact updates
-
-`review` on exit path 1 ends with: "No blockers. Run `/ship` to close the issue and update progress."
-
-**What not to do:** don't add closing steps inside `review` — review has two exits and closing logic would only apply to one of them. A separate skill keeps the boundary clean.
-
----
-
-## 7. Design vision gap: advisory tone is absent across all skills
-
-Skills currently execute — they don't propose. No skill opens with a suggestion and asks for validation before acting. The intended experience is:
-
-> "As I know how to help you, here's what I'd suggest for this step: [proposal]. Does this match where you want to go? Any changes before I proceed?"
-
-This consultative moment is missing everywhere. `setup-project` creates things without proposing the structure. `define-goals` interviews without framing what a healthy outcome looks like. `explore-issue` is the closest — it proposes approaches and asks section by section — but even it doesn't open with an upfront orientation.
-
-This is not a single-skill fix. It is a tone and interaction design principle that needs to be applied across the whole skill set, starting with `setup-project` and `define-goals` where first impressions are formed.
-
 ---
 
 ## ✅ 8. Gap: no skill owns the creation of toolchain issues at project start
@@ -113,18 +171,6 @@ The workflow goes `setup-project` → `define-goals` → `explore-issue`, but th
 - CI workflow (depends on all of the above)
 
 No current skill creates these. `setup-project` is infrastructure only. `define-goals` explicitly does not create issues. There is an ownership gap between bootstrapping and the first `explore-issue` call.
-
----
-
-## 10. Gap: no skill owns the outer delivery loop
-
-After bootstrap and the initial backlog are created, the workflow relies entirely on the user to manage the backlog, pick the next issue, and decide when to reprioritize or evolve goals. No skill covers:
-
-- Sprint planning or issue prioritization
-- Deciding what to work on next from GitHub Projects
-- Knowing when to run `/define-goals` again to evolve product scope
-
-The delivery loop (`explore-issue` → `plan` → `implement` → `review`) is well defined per issue, but the outer loop — across issues and sprints — has no owner. This may warrant a new skill (`plan-sprint`?) or a convention documented in CLAUDE.md templates.
 
 ---
 

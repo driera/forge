@@ -65,7 +65,7 @@ This creates:
 - `docs/ADRs/` — ADRs, written by `write-adr` during design
 - `.github/ISSUE_TEMPLATE/` — issue template for user stories
 - `.github/workflows/` — CI configuration (populated by `define-tech` → CI task)
-- `sessions/` — per-issue work artifacts (exploration.md, design.md, plan.md)
+- `sessions/` — per-issue work artifacts (context.md, plan.md)
 
 **Checkpoint:** confirm directory structure created before continuing.
 
@@ -165,8 +165,7 @@ explore-issue → plan → implement → review
 ```
 
 Work artifacts per issue live in `sessions/NNN-issue-title/`:
-- `exploration.md` — problem space and edge cases
-- `design.md` — architecture, components, data flow
+- `context.md` — problem space, edge cases, architecture, components, data flow
 - `plan.md` — ordered, testable tasks
 
 ---
@@ -211,11 +210,13 @@ Write two templates in `.github/ISSUE_TEMPLATE/`.
 ---
 name: User Story
 about: A feature or improvement from a user's perspective
-labels: ''
+labels: 'feature'
 assignees: ''
 ---
 
-## As a [user], I want [action] so that [outcome]
+## Goal
+
+As a [user], I want [action] so that [outcome].
 
 ## Context
 
@@ -223,7 +224,7 @@ Why does this exist? What problem does it solve?
 
 ## Acceptance Criteria
 
-- [ ] Specific, testable criterion
+- [ ] User-observable outcome — what the user sees or experiences
 - [ ] A11y: passes axe with zero violations (if UI component)
 - [ ] Tests written and passing
 - [ ] Docs updated (if applicable)
@@ -237,7 +238,6 @@ Constraints, approach hints, ADR references.
 - [ ] Tests passing
 - [ ] Code reviewed
 - [ ] Docs updated
-- [ ] PR linked and merged
 ```
 
 **task.md** — for engineering work not tied to a user-facing outcome (toolchain, refactors, infrastructure, dependencies):
@@ -247,7 +247,7 @@ Constraints, approach hints, ADR references.
 ---
 name: Task
 about: Engineering work
-labels: ''
+labels: 'tooling'
 assignees: ''
 ---
 
@@ -259,13 +259,11 @@ What is broken, missing, or needs addressing?
 
 Background, why it matters, what it affects.
 
-## Proposed Solution
-
-Direction or approach. Not prescriptive — refined during exploration.
+<!-- Proposed Solution: include only for complex tasks where the approach isn't obvious. Omit for straightforward setup tasks. -->
 
 ## Acceptance Criteria
 
-- [ ] Specific, testable criterion
+- [ ] Technical verifiable state — what is true about the system when done
 - [ ] Tests written and passing (if applicable)
 - [ ] Docs updated (if applicable)
 
@@ -273,7 +271,6 @@ Direction or approach. Not prescriptive — refined during exploration.
 
 - [ ] Tests passing
 - [ ] Code reviewed
-- [ ] PR linked and merged
 ```
 
 ---

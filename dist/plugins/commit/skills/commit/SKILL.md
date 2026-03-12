@@ -34,11 +34,11 @@ Use `git add <file>` for specific files — never `git add -A` or `git add .`. T
 
 If unsure whether a file should be included, leave it out and mention it to the user.
 
-**Session artifacts** (`exploration.md`, `design.md`, `plan.md`, `review.md`) are first-class
+**Session artifacts** (`context.md`, `plan.md`, `review.md`) are first-class
 deliverables — always include them when modified:
 
 - **First creation** of a session artifact is committed as the closing step of the skill that
-  produced it (e.g. `explore-issue` commits exploration.md + design.md; `plan` commits plan.md;
+  produced it (e.g. `explore-issue` commits context.md; `plan` commits plan.md;
   `review` commits review.md on first write). These skills invoke `commit` directly at the end
   of their flow — don't skip them.
 - **Subsequent updates** to existing artifacts travel with the related code changes that

@@ -1,13 +1,13 @@
 ---
 name: define-tech
-description: Defines the tech stack and toolchain for a new project. Reads product goals, leads a conversation about language, framework, package manager, linter, type checker, test runner, build tool, and deploy target, then writes TECH.md and generates a tailored CI workflow. Proposes first engineering task issues to BACKLOG.md and hands off to write-issue. Use this whenever the user says "define tech", "set up the toolchain", "what stack should we use", or after define-goals hands off during project inception.
+description: Defines the tech stack and toolchain for a new project. Reads product goals, leads a conversation about language, framework, package manager, linter, type checker, test runner, build tool, and deploy target, then writes TECH.md and seeds the initial engineering backlog in BACKLOG.md. Hands off to write-issue. Use this whenever the user says "define tech", "set up the toolchain", "what stack should we use", or after define-goals hands off during project inception.
 ---
 
 # define-tech
 
 Define the tech stack and toolchain before any code is written. The output is `TECH.md` — the
-technical source of truth — a tailored CI workflow, and a set of engineering task issues in
-`BACKLOG.md` ready to be created.
+technical source of truth — and a set of engineering task issues in `BACKLOG.md` ready to be
+created. CI is always a backlog task, never generated here — toolchain scripts must exist first.
 
 ---
 
@@ -143,8 +143,8 @@ If `BACKLOG.md` already has a `## Product issues` section from `define-goals`, a
 
 ## Step 6 — Commit artifacts
 
-Invoke the `commit` skill to commit `TECH.md`, `.github/workflows/ci.yml`, and `BACKLOG.md`.
-Suggested message: `chore: define tech stack, toolchain, and CI`
+Invoke the `commit` skill to commit `TECH.md` and `BACKLOG.md`.
+Suggested message: `chore: define tech stack and toolchain`
 
 ---
 

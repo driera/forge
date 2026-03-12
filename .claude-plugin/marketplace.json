@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Versioned Claude skills for structured agentic software development",
-    "version": "1.3.0"
+    "version": "1.4.0"
   },
   "plugins": [
     {
@@ -19,7 +19,7 @@
     },
     {
       "name": "define-tech",
-      "description": "Defines the tech stack and toolchain for a new project. Reads product goals, leads a conversation about language, framework, package manager, linter, type checker, test runner, build tool, and deploy target, then writes TECH.md and generates a tailored CI workflow. Proposes first engineering task issues to BACKLOG.md and hands off to write-issue. Use this whenever the user says \"define tech\", \"set up the toolchain\", \"what stack should we use\", or after define-goals hands off during project inception.",
+      "description": "Defines the tech stack and toolchain for a new project. Reads product goals, leads a conversation about language, framework, package manager, linter, type checker, test runner, build tool, and deploy target, then writes TECH.md and seeds the initial engineering backlog in BACKLOG.md. Hands off to write-issue. Use this whenever the user says \"define tech\", \"set up the toolchain\", \"what stack should we use\", or after define-goals hands off during project inception.",
       "source": "./dist/plugins/define-tech",
       "skills": ["./skills/define-tech"],
       "category": "planning",
@@ -35,7 +35,7 @@
     },
     {
       "name": "explore-issue",
-      "description": "Entry point to the delivery loop. Fetches a GitHub issue, explores its problem space, then drives the design through dialogue — covering architecture, components, data flow, error handling, and testing — before handing off to plan. Use this whenever the user says \"explore issue NNN\", \"work on NNN\", \"let's start issue NNN\", \"pick up issue NNN\", or similar. Also triggers when the user says \"explore issue\" or \"next issue\" with no number — in that case, fetch open issues and let the user choose.",
+      "description": "Entry point to the delivery loop. Fetches a GitHub issue (or accepts a manual description if GitHub isn't available), explores its problem space, then drives the design through dialogue — covering architecture, components, data flow, error handling, and testing — before handing off to plan. Use this whenever the user says \"explore issue NNN\", \"work on NNN\", \"let's start issue NNN\", \"pick up issue NNN\", or similar. Also triggers when the user says \"explore issue\" or \"next issue\" with no number — in that case, fetch open issues and let the user choose.",
       "source": "./dist/plugins/explore-issue",
       "skills": ["./skills/explore-issue"],
       "category": "planning",
@@ -43,7 +43,7 @@
     },
     {
       "name": "plan",
-      "description": "Reads exploration.md and design.md from the current session and produces bite-size implementation plan in plan.md. Use this whenever the user says \"plan\", \"write the plan\", \"plan the implementation\", or after explore-issue hands off to planning.",
+      "description": "Reads context.md from the current session and produces a bite-size implementation plan in plan.md. Falls back to asking the user if no session file exists. Use this whenever the user says \"plan\", \"write the plan\", \"plan the implementation\", or after explore-issue hands off to planning.",
       "source": "./dist/plugins/plan",
       "skills": ["./skills/plan"],
       "category": "planning",
@@ -59,7 +59,7 @@
     },
     {
       "name": "review",
-      "description": "Reviews the implementation of an issue before merge. Gathers context from the issue and design.md, delegates to the code-reviewer agent, then drives fixes inline or escalates to plan. Use this whenever the user says \"review\", \"review the implementation\", \"let's review\", \"ready for review\", \"before I merge\", or similar.",
+      "description": "Reviews the implementation of an issue before merge. Gathers context from the issue and context.md, delegates to the code-reviewer agent, then drives fixes inline or escalates to plan. Use this whenever the user says \"review\", \"review the implementation\", \"let's review\", \"ready for review\", \"before I merge\", or similar.",
       "source": "./dist/plugins/review",
       "skills": ["./skills/review"],
       "category": "development",
