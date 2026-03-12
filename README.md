@@ -71,6 +71,8 @@ Forge is opinionated. These decisions shape every skill:
 
 **GitHub as the source of truth for delivery.** Issues track work, milestones track progress, GitHub Projects tracks the roadmap. Every piece of work has a GitHub issue behind it — nothing gets built off the side of a conversation.
 
+**Graceful degradation over hard stops.** Skills adapt when inputs are missing or the expected workflow wasn't followed. If a GitHub issue isn't available, ask for a description. If a session file is missing, ask for context. Sense what's needed and continue — never halt and tell the user to fix their setup first.
+
 **JS/TS first.** Toolchain defaults — linter, formatter, type checker, test runner, build — are designed for JavaScript and TypeScript projects. Other stacks are supported through conversation but not scaffolded by default.
 
 ---
