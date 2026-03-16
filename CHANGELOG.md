@@ -11,6 +11,16 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [1.5.0] — 2026-03-16
+
+### Changed
+- `implement`: replaced hard stop for missing `plan.md` with an offer — user can paste a plan, point to a file, invoke `plan`, or describe what to implement.
+- `review`: added manual-input fallback if `gh issue view` fails — user can paste the issue title and description directly.
+- `write-adr`: Step 2 now falls back to globbing `docs/ADRs/*.md` if the script can't run. If `docs/ADRs/` doesn't exist, asks the user to confirm creation or provide an alternate destination.
+- `setup-project`: removed four hard stops — Step 3 auto-verifies directory creation; Step 5 (Forge install) no longer blocks; Step 8 (GitHub API) offers a manual path on failure; Step 9 hands off to `define-goals` immediately without waiting for push confirmation.
+
+---
+
 ## [1.4.0] — 2026-03-12
 
 ### Changed

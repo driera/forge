@@ -67,7 +67,7 @@ This creates:
 - `.github/workflows/` — CI configuration (populated by `define-tech` → CI task)
 - `sessions/` — per-issue work artifacts (context.md, plan.md)
 
-**Checkpoint:** confirm directory structure created before continuing.
+Verify creation by checking the directories exist. If any failed, report the specific error and ask how to proceed.
 
 ---
 
@@ -115,20 +115,17 @@ Skills are available globally once the marketplace is added to Claude Code.
 
 If Forge isn't already installed, tell the user:
 
-> "Add the Forge marketplace to Claude Code:
+> "Forge skills are needed to run the workflow. Add the marketplace when ready:
 > ```
 > /plugin marketplace add driera/forge
-> ```
-> Let me know when it's done."
+> ```"
 
-Wait for confirmation before continuing.
-
-Note the current Forge version for CLAUDE.md (step 6):
+Do not wait — continue to the next step. Note the current Forge version for CLAUDE.md (step 6):
 ```bash
 gh release view --repo driera/forge --json tagName --jq .tagName
 ```
 
-**Checkpoint:** confirm Forge is installed before continuing.
+If the version check fails, use a placeholder (e.g. `forge@latest`) and continue.
 
 ---
 
@@ -299,7 +296,7 @@ gh project create --owner <handle> --title "<Project Name> Roadmap"
 Note the project URL from the output. Update the `[GitHub Projects]` placeholder in
 CLAUDE.md and the README Status section.
 
-**Checkpoint:** confirm milestone and project board created before continuing.
+If either command fails, offer a manual path: "You can create it at github.com/&lt;handle&gt;/&lt;name&gt; and paste the URL here, or skip for now and add it later." Either way, continue.
 
 ---
 
@@ -312,10 +309,9 @@ Then tell the user:
 > "Bootstrap commit done. Push to make the repo live:
 > ```
 > git push -u origin main
-> ```
-> Let me know when it's done."
+> ```"
 
-Wait for the user to confirm the push is complete before continuing.
+Then continue immediately to step 10 — the push doesn't need to complete first.
 
 ---
 

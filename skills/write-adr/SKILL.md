@@ -64,7 +64,9 @@ Read the base directory from the system context (`Base directory for this skill:
 
 This reads `docs/ADRs/` and returns the next sequential number (e.g. `003`).
 
-If `docs/ADRs/` doesn't exist, create it and the script will start at `001`.
+If the base directory isn't available in context or the script can't be run, fall back to globbing `docs/ADRs/*.md` directly — count the existing files and add one.
+
+If `docs/ADRs/` doesn't exist, ask: "No `docs/ADRs/` directory found. Should I create it, or would you like to store ADRs somewhere else?" If the user confirms creation, create the directory and start at `001`.
 
 ## Step 3 — Draft the ADR
 

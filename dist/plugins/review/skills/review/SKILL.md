@@ -19,7 +19,7 @@ Run in parallel:
 ```bash
 gh issue view NNN --json number,title,body
 ```
-Extract: title, user story, acceptance criteria.
+Extract: title, user story, acceptance criteria. If the command fails, ask the user to paste the issue title and description directly — then continue as normal.
 
 ```bash
 git log --oneline --grep="#NNN"

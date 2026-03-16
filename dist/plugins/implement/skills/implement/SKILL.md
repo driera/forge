@@ -9,8 +9,8 @@ Works through `plan.md` autonomously — no need to tell it which task to do nex
 
 ## Step 1 — Review the plan
 
-Read `sessions/NNN-issue-title/plan.md`. If the file doesn't exist, stop and tell the user:
-"No `plan.md` found in `sessions/NNN-issue-title/`. Run `plan` first."
+Read `sessions/NNN-issue-title/plan.md`. If the file doesn't exist, ask:
+"No `plan.md` found. I can work from a plan you paste here, a plan file you point me to, invoke `plan` to generate one, or you can describe what to implement and I'll structure it. Which would you prefer?"
 
 The plan is self-contained and is your primary input throughout.
 
