@@ -94,9 +94,10 @@ Once you have a direction, present the design incrementally. Scale each section 
 Cover these sections in order:
 1. **Architecture** — how the pieces fit together at a high level
 2. **Components** — what gets built and roughly how each piece works
-3. **Data flow** — how data moves through the system
-4. **Error handling** — failure modes and how they're addressed
-5. **Testing** — what gets tested and at what level
+3. **Dependencies** — are any new packages needed? For each: what it does and why it was chosen. If none, say so explicitly.
+4. **Data flow** — how data moves through the system
+5. **Error handling** — failure modes and how they're addressed
+6. **Testing** — what gets tested and at what level
 
 Be ready to go back and revise. If a later section reveals a problem with an earlier one, surface it and correct it.
 

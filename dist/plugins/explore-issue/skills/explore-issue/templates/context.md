@@ -30,6 +30,10 @@
 
 {COMPONENTS}
 
+### Dependencies
+
+{DEPENDENCIES}
+
 ### Data Flow
 
 {DATA_FLOW}

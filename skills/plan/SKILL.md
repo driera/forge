@@ -17,9 +17,13 @@ Read these files from the session directory before writing anything:
 
 If context.md is missing, ask the user:
 > "No context.md found for this session. Paste your issue description, spec, or tell me what you want to plan."
-Accept any input — a JIRA ticket, a Notion doc, a plain description — and use it as the context. Continue normally.
+Accept any input — a JIRA ticket, a Notion doc, a plain description — and use it as the context. Then ask:
+> "Any new packages needed for this? If so, list them with a one-liner on what each does."
+Continue normally once you have the answer (none is a valid answer).
 
 ## Plan principles
+
+**Dependencies first.** If context.md has a `### Dependencies` section listing new packages (or the user named packages during manual intake), open the plan with a dedicated install task — just the install commands and a one-liner per package. No types, no test cases. This task belongs in its own commit group.
 
 **Write for someone with no domain knowledge.** The developer reading this plan is skilled but has never seen this codebase. They should not need to open context.md to understand what they're doing or why. Surface what matters.
 
