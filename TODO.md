@@ -4,6 +4,21 @@ Issues ordered by number, descending — highest (most recent) first.
 
 ---
 
+## 8. Track dependencies during exploration, install in plan
+
+Skills currently have no place to capture new packages discovered during design. The gap spans three files:
+
+1. **`explore-issue` Phase 2** — no "Dependencies" design section. Packages decided during design are never written down.
+2. **`context.md` template** — no `### Dependencies` section; even if the topic comes up, it isn't captured structurally.
+3. **`plan` SKILL.md** — no instruction to generate an install task from dependencies listed in context.md.
+
+**Proposed fix:**
+- Add "Dependencies" as a design section in `explore-issue` Phase 2 (between Components and Data Flow): are any new packages needed? For each: what it does and why it was chosen.
+- Add `### Dependencies` + `{DEPENDENCIES}` placeholder to `context.md` template.
+- Add a rule to `plan`: if context.md lists new dependencies, open the plan with a dedicated install task — no types, no test cases, just the install commands and a one-liner per package.
+
+---
+
 ## 7. New skill: `pickup` — smart delivery loop entry point
 
 ### Problem
@@ -40,28 +55,6 @@ Given a trigger like "let's work on issue #N", "pick up issue #N", or "start #N"
 
 - Partially addresses **#3** (no skill owns the outer delivery loop) — not sprint planning, but the per-issue entry point now has an owner.
 - Connects to **#1** (`/ship`) — `pickup` is the open of the issue lifecycle; `/ship` is the close.
-
----
-
-## 6. Audit and fix remaining hard stops across skills
-
-Skills should adapt and continue when inputs are missing or external operations fail — not halt and tell the user to fix their setup first. The following hard stops were identified and need graceful fallbacks:
-
-1. **`implement` Step 1** — explicit stop when `plan.md` is missing. Ask the user to paste a plan, describe what to implement, or offer to invoke `plan` inline.
-
-2. **`review` Step 1** — no fallback if `gh issue view` fails. Add the same manual-input fallback as `explore-issue`: accept issue title/description pasted directly, continue normally.
-
-3. **`setup-project` Step 5** — blocks on Forge install confirmation. Make it non-blocking — Forge is only needed when running skills, not during repo scaffolding. Log the requirement and continue.
-
-4. **`setup-project` Step 8** — blocks on GitHub API success for milestone/project board. If the API call fails, offer a manual path: "Create it at github.com/... and paste the URL, or skip and add it later."
-
-5. **`setup-project` Step 9** — blocks on git push confirmation before handing off to `define-goals`. The handoff doesn't require the remote to be live — hand off immediately and let the push happen in parallel.
-
-6. **`setup-project` Step 3** — waits for user to confirm `mkdir` succeeded. Auto-verify with a check instead; surface specific errors if creation fails.
-
-7. **`write-adr` Step 2** — `next-number.sh` unresolvable if base directory is missing from context. Fall back to globbing `docs/ADRs/` directly to determine the next ADR number.
-
-8. **`implement` Step 1 (ambiguity resolution)** — stalls when `context.md` is absent and plan ambiguities exist. Surface the ambiguity to the user directly rather than waiting silently.
 
 ---
 
@@ -136,3 +129,11 @@ Closing only happens on exit path 1. It requires judgment — is this goal actua
 `review` on exit path 1 ends with: "No blockers. Run `/ship` to close the issue and update progress."
 
 **What not to do:** don't add closing steps inside `review` — review has two exits and closing logic would only apply to one of them. A separate skill keeps the boundary clean.
+
+---
+
+## Done
+
+### ✅ 6. Audit and fix remaining hard stops across skills
+
+Replaced hard stops in `implement`, `review`, `setup-project`, and `write-adr` with graceful fallbacks — skills now ask, adapt, or continue rather than halting. Released in v1.5.0.

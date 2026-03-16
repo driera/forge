@@ -1,11 +1,11 @@
 ---
 name: implement
-description: Executes the implementation plan from plan.md task by task, following TDD. Reviews the plan critically before starting, then loops through tasks with a report-and-feedback cycle before each commit. Use this whenever the user says "implement", "start implementing", "let's code", or after plan hands off to implementation.
+description: Executes the implementation plan from plan.md task by task, following TDD. Reviews the plan critically before starting, then loops through tasks and commits at group boundaries defined in the plan. Use this whenever the user says "implement", "start implementing", "let's code", or after plan hands off to implementation.
 ---
 
 # implement
 
-Works through `plan.md` autonomously — no need to tell it which task to do next. Each task follows a tight loop: implement → validate → report → feedback → commit. At the end, re-validates everything and summarises what was built.
+Works through `plan.md` autonomously — no need to tell it which task to do next. Tasks are grouped into commit groups; `implement` commits at group boundaries, not after every task. At the end, re-validates everything and summarises what was built.
 
 ## Step 1 — Review the plan
 
@@ -79,9 +79,13 @@ End with: **"Ready for feedback."**
 
 ## Step 4 — Feedback and commit
 
-Apply any feedback from the user. Then invoke the `commit` skill to commit the task's changes.
+Apply any feedback from the user.
 
-Once committed, go back to step 2 for the next task. Repeat until all tasks are done.
+Check whether the completed task is the last in its commit group (i.e. a `Commit:` line follows it in `plan.md`):
+- **Yes** — invoke the `commit` skill using that message, then move to the next task.
+- **No** — move directly to the next task without committing.
+
+Repeat until all tasks are done.
 
 ## Step 5 — Done
 

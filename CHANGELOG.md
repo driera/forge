@@ -11,6 +11,14 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [1.6.0] — 2026-03-16
+
+### Changed
+- `plan`: replaced "one commit per task" with explicit commit groups — `Commit:` markers in the plan define boundaries; `implement` commits when it hits one. Merged `Bite-size tasks` + `Feature-complete tasks` into a single `Task scope` principle. Fixed `What to implement` guidance to describe observable outcomes, not function names. Added `TECH.md` as an optional input.
+- `implement`: commits at group boundaries defined in the plan, not after every task.
+
+---
+
 ## [1.5.0] — 2026-03-16
 
 ### Changed

@@ -13,6 +13,7 @@ Read these files from the session directory before writing anything:
 - `sessions/NNN-issue-title/context.md` — problem space, edge cases, constraints, approved approach, architecture, components
 - `sessions/NNN-issue-title/review.md` — if it exists, a previous review found significant issues; the new plan must address them
 - `CLAUDE.md` — project conventions, stack, patterns in use
+- `TECH.md` — package manager, test runner, language (if it exists)
 
 If context.md is missing, ask the user:
 > "No context.md found for this session. Paste your issue description, spec, or tell me what you want to plan."
@@ -22,13 +23,13 @@ Accept any input — a JIRA ticket, a Notion doc, a plain description — and us
 
 **Write for someone with no domain knowledge.** The developer reading this plan is skilled but has never seen this codebase. They should not need to open context.md to understand what they're doing or why. Surface what matters.
 
-**Bite-size tasks.** Each task should be independently executable and committable. If a task feels like it could be split, split it. The right size is roughly: write tests → implement → commit.
+**Task scope.** Each task is a full vertical slice for one feature: types → tests → implementation. Never split by layer (all types first, then all tests). Never split by phase across features. If a task feels too large, find a smaller version of the feature that still works end to end — then push the rest to a follow-up task. Tasks don't map 1:1 to commits — see Commit groups.
 
-**TDD order.** Within each task, the implied sequence is: define what to verify first, then make it pass. The plan doesn't write tests — it specifies what behavior needs to be verified.
+**TDD order within each task.** The implied execution sequence is always: define types → write failing tests → implement → run validators. The plan doesn't write code — it names what types to introduce and what behavior to verify.
 
 **YAGNI.** Only plan what the issue requires. If a generalization isn't needed for this issue, leave it out. Future issues can extend.
 
-**One commit per task.** Include a suggested commit message for each task. This enforces focus and makes the history readable.
+**Commit groups.** Tasks are fine-grained; commits are not. Group related tasks in the plan and mark each boundary with a `Commit:` line after the last task in the group. `implement` commits when it hits a marker — no runtime judgment needed. A plan for a single issue typically has 1–3 commit groups.
 
 ## plan.md format
 
@@ -52,18 +53,29 @@ and only reads this plan, they should still be able to execute it correctly.
 
 What this task achieves and why it's needed.
 
-Use cases to cover:
-- [Specific scenario or input this task must handle]
-- [Edge case from context.md worth naming]
-- …
+Types to define (if any):
+- [Interface, enum, or type alias this task introduces]
+
+Test cases:
+- [Scenario or input — what goes in, what's expected out]
+- [Edge case worth naming]
+
+What to implement:
+- [Observable outcome — what the system does or stops doing as a result of this task]
+
+### 2. [Next task — logically related to task 1]
+
+…
 
 Commit: `type(scope): short message`
 
 ---
 
-### 2. [Next task]
+### 3. [Task — starts a new commit group]
 
 …
+
+Commit: `type(scope): short message`
 
 ## Dependencies
 
