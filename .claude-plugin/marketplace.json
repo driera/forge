@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Versioned Claude skills for structured agentic software development",
-    "version": "1.6.0"
+    "version": "1.8.0"
   },
   "plugins": [
     {
@@ -88,6 +88,14 @@
       "skills": ["./skills/setup-project"],
       "category": "planning",
       "keywords": ["planning", "bootstrap", "setup", "inception"]
+    },
+    {
+      "name": "ship",
+      "description": "Closes the lifecycle after a clean review — closes the GitHub issue, checks milestone progress, and checks whether any GOALS.md goal is now achieved. Use this whenever the user says \"ship\", \"close the issue\", \"we're done\", or after review hands off on the no-blockers path.",
+      "source": "./dist/plugins/ship",
+      "skills": ["./skills/ship"],
+      "category": "delivery",
+      "keywords": ["delivery", "issues", "github", "lifecycle", "goals"]
     },
     {
       "name": "skill-creator",

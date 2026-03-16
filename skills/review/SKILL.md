@@ -50,7 +50,7 @@ Present the agent's findings grouped as:
 
 ## Step 4 — Act on blocking issues
 
-**If no blocking issues:** say "Ready to merge." and stop.
+**If no blocking issues:** say "No blockers. Run `/ship` to close the issue and update progress." and stop.
 
 **If blocking issues exist**, assess scope and propose what to do — wait for confirmation before acting.
 

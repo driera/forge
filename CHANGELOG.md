@@ -11,6 +11,33 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [1.8.0] — 2026-03-16
+
+### Added
+- `ship`: new skill that closes the issue lifecycle after a clean review — closes the GitHub issue, checks milestone progress, and marks GOALS.md goals as achieved (with confirmation).
+
+### Changed
+- `review`: Step 4 no-blockers path now hands off to `/ship` instead of stopping at "Ready to merge."
+
+---
+
+## [1.7.0] — 2026-03-16
+
+### Changed
+- `explore-issue`: added "Dependencies" as Phase 2 design section 3 (between Components and Data Flow) — captures new packages with rationale during design.
+- `explore-issue/templates/context.md`: added `### Dependencies` + `{DEPENDENCIES}` placeholder.
+- `plan`: if `context.md` lists new packages under `### Dependencies`, opens the plan with a dedicated install task (own commit group, no types/test cases). If no `context.md`, asks about packages as part of manual intake.
+
+---
+
+## [1.6.1] — 2026-03-16
+
+### Changed
+- `implement`: removed `[~]` in-progress task marker — tasks are now either `[ ]` or `[x]`, no intermediate state.
+- `implement`: replaced `validate.sh` script with inline validation instructions — reads `TECH.md` for the package manager, then runs lint → typecheck → test using whatever scripts are configured. Deleted `scripts/validate.sh`.
+
+---
+
 ## [1.6.0] — 2026-03-16
 
 ### Changed
