@@ -34,20 +34,17 @@ If something is unclear, consult `sessions/NNN-issue-title/design.md` for the ar
 
 ## Step 2 — Implement a task
 
-Find the first task not marked as done. Mark it as in-progress in `plan.md`:
-```
-- [ ] Task name  →  - [~] Task name
-```
+Find the first task not marked as done (`[ ]`).
 
 Follow TDD:
 1. Write the failing test(s) for the use cases listed in this task — nothing beyond what the plan specifies
 2. Confirm they fail
 3. Implement the minimum code to make them pass
 4. Refactor if needed — clean up without changing behaviour
-5. Run all validations using `scripts/validate.sh` relative to this skill's base directory (provided in the system context as `Base directory for this skill: <path>`). The script detects what npm scripts exist in `package.json` and only runs those — safe to run even on a partially configured project.
+5. Run validations: read `TECH.md` for the package manager, then run lint → typecheck → test using whatever scripts are configured. Skip any script that doesn't exist in `package.json`.
 6. Mark the task as done:
 ```
-- [~] Task name  →  - [x] Task name
+- [ ] Task name  →  - [x] Task name
 ```
 
 ## Step 2a — Deviation handling
