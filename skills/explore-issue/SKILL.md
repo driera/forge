@@ -87,9 +87,9 @@ When they confirm, move to Phase 2.
 
 Before diving into design, propose 2–3 different approaches with tradeoffs. Lead with your recommendation and explain why. Keep it conversational — a few sentences per option. Wait for the user to choose one or redirect.
 
-### 8. Present the design section by section
+### 8. Present the full design
 
-Once you have a direction, present the design incrementally. Scale each section to its complexity — a few sentences if straightforward, up to 200–300 words if nuanced. After each section, ask: "Does this look right?"
+Once you have a direction, present the complete design in one message. Scale each section to its complexity — a few sentences if straightforward, up to 200–300 words if nuanced.
 
 Cover these sections in order:
 1. **Architecture** — how the pieces fit together at a high level
@@ -99,7 +99,9 @@ Cover these sections in order:
 5. **Error handling** — failure modes and how they're addressed
 6. **Testing** — what gets tested and at what level
 
-Be ready to go back and revise. If a later section reveals a problem with an earlier one, surface it and correct it.
+Then ask: "Does this cover it, or anything to adjust before I write context.md?"
+
+Be ready to revise any section based on feedback. If a revision in one section affects another, surface it and correct it.
 
 ### 9. Write design.md
 
@@ -130,4 +132,8 @@ If no decisions had meaningful tradeoffs and no questions are open, skip this st
 
 ### 11. Hand off to plan
 
-Tell the user context.md is saved. Suggest invoking the `plan` skill next.
+Tell the user context.md is saved. Then offer to chain:
+
+> "Ready to plan? I'll kick off `/plan` now — ok?"
+
+If confirmed, invoke the `plan` skill.

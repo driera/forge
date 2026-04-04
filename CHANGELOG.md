@@ -11,6 +11,18 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [1.9.0] — 2026-04-04
+
+### Changed
+- `explore-issue`: full design presented in one message instead of section-by-section; single feedback round before writing context.md
+- `explore-issue`: offers to chain to `plan` after context.md is saved — one "ok" is enough
+- `plan`: offers to chain to `implement` after plan is confirmed
+- `implement`: runs an entire commit group autonomously; pauses once at the commit boundary for feedback before committing
+- `implement`: offers to chain to `review` after the last commit
+- `review`: offers to chain to `ship` when no blocking issues are found
+
+---
+
 ## [1.8.2] — 2026-04-04
 
 ### Changed

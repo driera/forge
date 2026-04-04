@@ -32,20 +32,20 @@ After reading (or resuming), think critically about the remaining tasks:
 
 If something is unclear, consult `sessions/NNN-issue-title/design.md` for the architectural intent before raising it with the user. If it's still unresolved after that, raise it — describe what you found and what you'd need to proceed. Once the plan is solid, move to step 2.
 
-## Step 2 — Implement a task
+## Step 2 — Implement a commit group
 
-Find the first task not marked as done (`[ ]`).
+Find the next commit group: all consecutive tasks up to (and including) the next `Commit:` line in `plan.md`.
 
-Follow TDD:
-1. Write the failing test(s) for the use cases listed in this task — nothing beyond what the plan specifies
+Work through each task in the group without stopping:
+
+For each task:
+1. Write the failing test(s) for the use cases listed — nothing beyond what the plan specifies
 2. Confirm they fail
 3. Implement the minimum code to make them pass
 4. Refactor if needed — clean up without changing behaviour
-5. Run validations: read `TECH.md` for the package manager, then run lint → typecheck → test using whatever scripts are configured. Skip any script that doesn't exist in `package.json`.
-6. Mark the task as done:
-```
-- [ ] Task name  →  - [x] Task name
-```
+5. Mark the task as done: `- [ ] Task name  →  - [x] Task name`
+
+After the last task in the group, run validations once: read `TECH.md` for the package manager, then run lint → typecheck → test using whatever scripts are configured. Skip any script that doesn't exist in `package.json`.
 
 ## Step 2a — Deviation handling
 
@@ -53,8 +53,7 @@ Deviations from the plan happen. Handle them by scope:
 
 **Minor deviation** — extra helper needed, slightly different file structure, small scope adjustment within the task:
 - Continue without stopping
-- Note the deviation in the task report
-- Flag it in the final summary
+- Note it for the group report
 
 **Significant deviation** — wrong approach identified, missing design piece, changes required beyond current task scope, would affect other tasks:
 - Stop immediately
@@ -65,28 +64,26 @@ Deviations from the plan happen. Handle them by scope:
 
 Do not push through a significant deviation silently. The minor/significant split matches the mental model in `review` — use the same judgement.
 
-## Step 3 — Report
+## Step 3 — Group report and commit
 
 Show:
 - Validation output (full or summarised if long — errors always in full)
-- What changed (files touched, brief description)
+- Tasks completed in this group (brief description of what changed)
 - Any deviations noted
 
-End with: **"Ready for feedback."**
+Then: before invoking the `commit` skill, check if `context.md` or `plan.md` in the session directory are uncommitted (i.e. untracked or modified in `git status`). If so, stage them alongside the implementation files — they belong in this first commit.
 
-## Step 4 — Feedback and commit
+Invoke the `commit` skill using the group's commit message.
 
-Apply any feedback from the user.
+Repeat from Step 2 for the next commit group until all tasks are done.
 
-Check whether the completed task is the last in its commit group (i.e. a `Commit:` line follows it in `plan.md`):
-- **Yes** — before invoking the `commit` skill, check if `context.md` or `plan.md` in the session directory are uncommitted (i.e. untracked or modified in `git status`). If so, stage them alongside the implementation files — they belong in this first commit. Then invoke the `commit` skill using the group's commit message.
-- **No** — move directly to the next task without committing.
+## Step 4 — Done
 
-Repeat until all tasks are done.
+After the last commit group:
+1. Say: **"I'm done with the plan."**
+2. Show a short summary: what was built, which tasks were completed, any deviations worth noting.
+3. Offer to chain:
 
-## Step 5 — Done
+> "Ready to review? I'll kick off `/review` now — ok?"
 
-After the last task is committed:
-1. Run all validations one final time
-2. Say: **"I'm done with the plan."**
-3. Show a short summary: what was built, which tasks were completed, any deviations from the plan worth noting.
+If confirmed, invoke the `review` skill.

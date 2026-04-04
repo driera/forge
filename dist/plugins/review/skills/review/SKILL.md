@@ -50,7 +50,11 @@ Present the agent's findings grouped as:
 
 ## Step 4 — Act on blocking issues
 
-**If no blocking issues:** say "No blockers. Run `/ship` to close the issue and update progress." and stop.
+**If no blocking issues:** offer to chain:
+
+> "No blockers. Ready to ship? I'll kick off `/ship` now — ok?"
+
+If confirmed, invoke the `ship` skill.
 
 **If blocking issues exist**, assess scope and propose what to do — wait for confirmation before acting.
 

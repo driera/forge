@@ -91,4 +91,8 @@ If tasks must be done in order and that's clear from reading them, omit this sec
 
 Show the plan to the user. Ask: "Does this cover everything, or anything to adjust before implementing?"
 
-Once confirmed, tell the user to invoke the `implement` skill to start.
+Once confirmed, offer to chain:
+
+> "Ready to implement? I'll kick off `/implement` now — ok?"
+
+If confirmed, invoke the `implement` skill.
