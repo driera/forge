@@ -57,67 +57,23 @@ Ask only what you genuinely need. Don't pepper the user with questions if the in
 
 ## Step 4 — Draft the issue
 
+Load the body template for the issue type:
+
+1. Check if `.github/ISSUE_TEMPLATE/<type>.md` exists (where `<type>` is `user-story` or `task`)
+2. If yes — read it and strip the YAML frontmatter block (`---` … `---`) to get the body skeleton
+3. If no — use the bundled fallback from `templates/<type>.md` in this skill
+
+Fill in the skeleton with what the user provided, replacing placeholder text. Leave sections blank rather than inventing content.
+
 ### User story
 
 **Title format**: short descriptive title (e.g. "Login with Google", "Empty state for task list")
-
-```markdown
-## Goal
-
-As a [subject], I want [action] so that [outcome].
-
-## Context
-
-[Why does this exist? What problem does it solve? What's the background?
-Link any referenced files — e.g. [GOALS.md](../GOALS.md), [TECH.md](../TECH.md).]
-
-## Acceptance Criteria
-
-- [ ] [User-observable outcome — what the user sees or experiences]
-- [ ] A11y: passes axe with zero violations (if UI component)
-- [ ] Tests written and passing
-- [ ] Docs updated (if applicable)
-
-## Technical Notes
-
-[Constraints, approach hints, ADR references, links to related issues or designs.]
-
-## Definition of Done
-
-- [ ] Tests passing
-- [ ] Code reviewed
-- [ ] Docs updated
-```
 
 Good acceptance criteria describe **what a user observes**, not what the code does. "Works correctly" is not a criterion. "User sees an error message when the field is empty" is.
 
 ### Task
 
 **Title format**: short imperative description of the engineering work (e.g. "Set up ESLint", "Migrate state to Zustand")
-
-```markdown
-## Problem
-
-[What is broken, missing, or needs addressing?]
-
-## Context
-
-[Background, why it matters, what it affects.
-Link any referenced files — e.g. [TECH.md](../TECH.md).]
-
-<!-- Proposed Solution: include only for complex tasks where the approach isn't obvious. Omit for straightforward setup tasks. -->
-
-## Acceptance Criteria
-
-- [ ] [Technical verifiable state — what is true about the system when done]
-- [ ] Tests written and passing (if applicable)
-- [ ] Docs updated (if applicable)
-
-## Definition of Done
-
-- [ ] Tests passing
-- [ ] Code reviewed
-```
 
 Good acceptance criteria for tasks describe **verifiable technical states** — "ESLint runs with zero errors on `npm run lint`", not "add ESLint config".
 
