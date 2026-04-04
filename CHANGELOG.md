@@ -11,6 +11,22 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [1.8.2] — 2026-04-04
+
+### Changed
+- `explore-issue`: removed artifact commit at the end — context.md is saved but not committed
+- `plan`: removed artifact commit after confirmation — plan.md is saved but not committed
+- `implement`: first commit group now stages uncommitted session artifacts (context.md, plan.md) alongside implementation files
+
+---
+
+## [1.8.1] — 2026-04-04
+
+### Changed
+- `write-issue`: issue body templates extracted to `templates/user-story.md` and `templates/task.md`. Skill now loads from `.github/ISSUE_TEMPLATE/` when present, falling back to bundled templates.
+
+---
+
 ## [1.8.0] — 2026-03-16
 
 ### Added

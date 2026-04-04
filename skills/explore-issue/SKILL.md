@@ -128,11 +128,6 @@ If yes, resolve through dialogue, then invoke `write-adr` in **open decision mod
 
 If no decisions had meaningful tradeoffs and no questions are open, skip this step.
 
-### 11. Commit artifacts
+### 11. Hand off to plan
 
-Invoke the `commit` skill to commit context.md (and any ADRs written).
-Suggest commit message: `docs: add context for #NNN`
-
-### 12. Hand off to plan
-
-Tell the user context.md is saved and committed. Suggest invoking the `plan` skill next.
+Tell the user context.md is saved. Suggest invoking the `plan` skill next.

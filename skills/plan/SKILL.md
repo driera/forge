@@ -91,10 +91,4 @@ If tasks must be done in order and that's clear from reading them, omit this sec
 
 Show the plan to the user. Ask: "Does this cover everything, or anything to adjust before implementing?"
 
-Once confirmed, invoke the `commit` skill to commit plan.md (and any session artifacts modified during planning).
-Suggest commit message: `docs: add plan for #NNN`
-
-The commit must happen before the handoff message. Plan intent belongs in git history independently
-of the implementation — reviewers and future sessions can read the plan at the exact commit it was written.
-
-Then tell the user to invoke the `implement` skill to start.
+Once confirmed, tell the user to invoke the `implement` skill to start.

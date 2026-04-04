@@ -79,7 +79,7 @@ End with: **"Ready for feedback."**
 Apply any feedback from the user.
 
 Check whether the completed task is the last in its commit group (i.e. a `Commit:` line follows it in `plan.md`):
-- **Yes** — invoke the `commit` skill using that message, then move to the next task.
+- **Yes** — before invoking the `commit` skill, check if `context.md` or `plan.md` in the session directory are uncommitted (i.e. untracked or modified in `git status`). If so, stage them alongside the implementation files — they belong in this first commit. Then invoke the `commit` skill using the group's commit message.
 - **No** — move directly to the next task without committing.
 
 Repeat until all tasks are done.
