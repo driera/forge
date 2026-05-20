@@ -9,6 +9,10 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+- `write-opportunity`: new skill to register product opportunities — raw signals, pain points, or intuitions worth exploring before any solution is committed. Creates a GitHub issue with the `opportunity` label; only populates fields that emerge from conversation.
+- `setup-project`: creates `.github/ISSUE_TEMPLATE/opportunity.md` during project bootstrap
+
 ---
 
 ## [1.9.0] — 2026-04-04

@@ -6,11 +6,16 @@
 
 Forge is a set of Claude Code skills that define a complete, opinionated delivery workflow — from bootstrapping a new project to exploring issues, planning, implementing, and reviewing. Skills are individually installable as Claude plugins.
 
-The workflow follows two loops:
+The workflow follows three loops:
 
 **Inception** — run once at project start, repeatable for product evolution:
 ```
 setup-project → define-goals → define-tech → write-issue
+```
+
+**Discovery** — continuous, runs in parallel with everything else:
+```
+write-opportunity → explore-issue
 ```
 
 **Delivery** — repeating per increment:
@@ -18,7 +23,7 @@ setup-project → define-goals → define-tech → write-issue
 explore-issue → plan → implement → review
 ```
 
-`write-adr` floats across both — triggered when a significant architectural decision is made.
+`write-adr` floats across all loops — triggered when a significant architectural decision is made.
 
 ## Skills
 
@@ -27,6 +32,7 @@ explore-issue → plan → implement → review
 | [`setup-project`](skills/setup-project/) | Bootstrap a new project repo |
 | [`define-goals`](skills/define-goals/) | Create or evolve GOALS.md — the product source of truth |
 | [`define-tech`](skills/define-tech/) | Define tech stack, toolchain, and seed engineering backlog |
+| [`write-opportunity`](skills/write-opportunity/) | Register a product opportunity for later evaluation |
 | [`write-issue`](skills/write-issue/) | Create GitHub issues in user-story or task format |
 | [`explore-issue`](skills/explore-issue/) | Explore an issue's problem space and drive design |
 | [`plan`](skills/plan/) | Break approved design into ordered, testable tasks |

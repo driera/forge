@@ -272,6 +272,36 @@ Background, why it matters, what it affects.
 
 ---
 
+**opportunity.md** — for product opportunities in the discovery space (unmet needs, signals, intuitions not yet shaped into stories):
+
+```markdown
+<!-- .github/ISSUE_TEMPLATE/opportunity.md -->
+---
+name: Opportunity
+about: A product signal worth exploring before any solution is committed
+labels: 'opportunity'
+assignees: ''
+---
+
+## Signal
+
+What was observed, heard, or intuited that suggests something worth exploring.
+
+## Who it affects
+
+User, role, or context this opportunity relates to.
+
+## Potential value
+
+Why this might matter. What could improve if we acted on it.
+
+## Open questions
+
+What we don't know yet. What would need to be answered before committing.
+```
+
+---
+
 ## Step 8 — GitHub Projects and milestone
 
 Create the MVP milestone. The description comes from GOALS.md after `define-goals` runs —
