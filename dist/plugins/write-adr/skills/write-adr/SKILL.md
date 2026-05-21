@@ -57,14 +57,12 @@ See entry modes above. Don't proceed to writing until the decision is clear and 
 
 ## Step 2 — Determine the next ADR number
 
-Read the base directory from the system context (`Base directory for this skill: <path>`), then run:
+List the existing ADRs:
 ```bash
-<base-dir>/scripts/next-number.sh
+ls docs/ADRs/*.md 2>/dev/null
 ```
 
-This reads `docs/ADRs/` and returns the next sequential number (e.g. `003`).
-
-If the base directory isn't available in context or the script can't be run, fall back to globbing `docs/ADRs/*.md` directly — count the existing files and add one.
+Extract the highest number from the filenames (e.g. `003-some-decision.md` → `3`), add one, and zero-pad to three digits (e.g. `004`). If no files exist, start at `001`.
 
 If `docs/ADRs/` doesn't exist, ask: "No `docs/ADRs/` directory found. Should I create it, or would you like to store ADRs somewhere else?" If the user confirms creation, create the directory and start at `001`.
 
